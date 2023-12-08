@@ -1,21 +1,18 @@
 # Proyecto PMDM Tema3
 
 ## Introducción
-<p style="text-align: justify;" >
-Proyecto PMDM Tema 3 (Programación Multimedia y Dispositivos Móviles). Este proyecto tiene como 
+
+Proyecto PMDM Tema 3 (`Programación Multimedia y Dispositivos Móviles`). Este proyecto tiene como 
 objetivo demostrar la implementación de un sistema de gestión de restaurantes utilizando el patrón 
-de diseño Modelo-Vista-Controlador (MVC). A lo largo de esta documentación, exploraremos las clases 
-y componentes clave del proyecto, describiendo sus funciones y responsabilidades.
-</p>
+de diseño Modelo-Vista-Controlador (`MVC`). A lo largo de esta documentación, exploraremos las 
+clases y componentes clave del proyecto, describiendo sus funciones y responsabilidades.
 
 ## Descripción General
 
-<p style="text-align: justify;" >
-El proyecto está estructurado en varias clases que representan las capas del patrón 
-<strong>MVC</strong>: modelos para los datos de restaurantes y usuarios, vistas para la interfaz 
-de usuario, y controladores para gestionar la lógica de negocio y las interacciones entre modelos y
-vistas.
-</p>
+El proyecto está estructurado en varias clases que representan las capas del patrón `MVC`: modelos 
+para los datos de restaurantes y usuarios, vistas para la interfaz  de usuario, y controladores 
+para gestionar la lógica de negocio y las interacciones entre modelos y vistas.
+
 
 ## Clases Principales
 
