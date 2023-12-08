@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layout_second"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SecondFragment"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:id="@+id/layout_regresar"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_weight="2"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_cerrar_sesion"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="CERRAR SESION"
+            android:textSize="17dp"
+            android:background="@drawable/boton_login"
+            app:backgroundTint="@null" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_insertar"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/add_foreground"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="20dp"
+            android:text="INSERTAR"
+            android:textSize="20dp"
+            android:background="@drawable/boton_login"
+            app:backgroundTint="@null"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+</LinearLayout>
