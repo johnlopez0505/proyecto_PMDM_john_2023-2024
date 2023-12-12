@@ -16,7 +16,7 @@ class AdapterRestaurant(
     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHRestaurant {
         val layoutInflater = LayoutInflater.from(parent. context)//objeto para crear la vista.
-        val layoutItemRestaurant = R.layout. item_restaurant //accedo al xml del item a crear.
+        val layoutItemRestaurant = R.layout.item_restaurant //accedo al xml del item a crear.
         return ViewHRestaurant(
             layoutInflater.inflate(layoutItemRestaurant, parent, false),
             deleteOnClick,

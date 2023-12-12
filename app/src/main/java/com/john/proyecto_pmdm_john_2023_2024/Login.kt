@@ -41,7 +41,7 @@ class Login : AppCompatActivity() {
             guardarUltimoUsuario(user, password)
             // El usuario ha iniciado sesión con éxito
             // Credenciales válidas, iniciar Activity principal
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity2::class.java)
             intent.putExtra("name", user)  // Pasa el usuario como argumento al Activity principal
             startActivity(intent)
         } else {

@@ -31,20 +31,11 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initEvent()
-        controller = Controller(requireContext())
+
 
 
     }
-    private fun initEvent(){
-        binding.btnAdd.setOnClickListener{
-            controller.addRestaurant()
-        }
 
-        binding.btnCerrarSesion.setOnClickListener{
-            controller.back()
-        }
-    }
 
 
 }
