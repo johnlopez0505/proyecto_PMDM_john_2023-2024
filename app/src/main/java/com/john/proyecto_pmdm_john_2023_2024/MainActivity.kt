@@ -1,7 +1,7 @@
 package com.john.proyecto_pmdm_john_2023_2024
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -12,16 +12,16 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.john.proyecto_pmdm_john_2023_2024.controller.Controller
-import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityMain2Binding
+import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityMainBinding
 
-class MainActivity2 : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var binding: ActivityMain2Binding
+    lateinit var binding: ActivityMainBinding
     private lateinit var controller : Controller
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMain2Binding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init() //inicializo la clase
@@ -31,7 +31,7 @@ class MainActivity2 : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_activity2, menu)
+        menuInflater.inflate(R.menu.main_activity, menu)
         return true
     }
 
@@ -39,9 +39,8 @@ class MainActivity2 : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main2)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-    @SuppressLint("ResourceType")
     private fun init(){
-        setSupportActionBar(binding.appBarMain2.toolbar)
+        setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -50,7 +49,7 @@ class MainActivity2 : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_principal, R.id.restaurantesFragment
+                R.id.nav_home, R.id.nav_principal, R.id.nav_restaurantes
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -70,4 +69,5 @@ class MainActivity2 : AppCompatActivity() {
 
 
     }
+
 }

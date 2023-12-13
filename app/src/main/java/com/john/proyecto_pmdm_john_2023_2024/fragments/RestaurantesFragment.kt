@@ -1,20 +1,24 @@
 package com.john.proyecto_pmdm_john_2023_2024.fragments
 
+import android.content.Intent.getIntent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.john.proyecto_pmdm_john_2023_2024.MainActivity2
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.controller.Controller
+import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityMainBinding
 import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentRestaurantesBinding
 
 class RestaurantesFragment : Fragment() {
     lateinit var binding: FragmentRestaurantesBinding
     lateinit var recyclerView : RecyclerView
     lateinit var controller: Controller
+    private lateinit var txtName     : TextView
+    private lateinit var txtEmail : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,6 +38,7 @@ class RestaurantesFragment : Fragment() {
 
 
         init()
+        login()
     }
 
     fun init(){
@@ -46,6 +51,15 @@ class RestaurantesFragment : Fragment() {
        }
 
     }
-
-
+    private fun login() {
+        //txtName = bindingActiviti.navView.findViewById(R.id.text_user_nav_header)
+        //val name = getIntent().getStringExtra("name")
+        //if (name!= null){
+         //   txtName.text = "$name"
+        }
 }
+
+
+
+
+

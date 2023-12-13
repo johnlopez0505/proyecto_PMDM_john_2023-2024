@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    android:label="@string/menu_gallery"
-    app:startDestination="@id/restaurantesFragment">
+    android:label="@string/menu_principal"
+    app:startDestination="@id/nav_restaurantes">
 
     <fragment
         android:id="@+id/nav_home"
@@ -15,7 +15,7 @@
     <fragment
         android:id="@+id/nav_principal"
         android:name="com.john.proyecto_pmdm_john_2023_2024.ui.gallery.PrincipalFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_principal"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
@@ -24,7 +24,7 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
-        android:id="@+id/restaurantesFragment"
+        android:id="@+id/nav_restaurantes"
         android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.RestaurantesFragment"
         android:label="Restaurantes"
         tools:layout="@layout/fragment_restaurantes" />
