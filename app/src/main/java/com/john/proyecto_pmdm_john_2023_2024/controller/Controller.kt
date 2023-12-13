@@ -54,7 +54,6 @@ class Controller(private val context: Context):DialogEditRestaurant.EditRestaura
         recyclerView.adapter = AdapterRestaurant(listRestaurants,
             { pos -> delRestaurant(pos,recyclerView) }, { pos -> updateRestaurant(pos,recyclerView)})
 
-        addRestaurant(recyclerView)
     }
 
     fun delRestaurant(pos: Int, recyclerView: RecyclerView) {
