@@ -1,54 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+
+
+    <include
+        android:id="@+id/app_bar_main"
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.50"
-        android:orientation="vertical"
-        android:background="#D613876A">
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container_static"
-            android:layout_width="match_parent"
-            android:name="com.john.proyecto_pmdm_john_2023_2024.FirstFragment"
-            android:layout_height="match_parent"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_height="match_parent" />
 
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:background="@drawable/tricolor"
-        android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:background="#D613876A">
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container_static2"
-            android:layout_width="match_parent"
-            android:name="com.john.proyecto_pmdm_john_2023_2024.SecondFragment"
-            android:layout_height="match_parent"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
-</LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

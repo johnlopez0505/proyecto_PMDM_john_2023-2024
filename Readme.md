@@ -1,16 +1,21 @@
-# Proyecto PMDM Tema3
+# Proyecto PMDM Tema3 CRUD completo
 
 ## Introducción
 
 Proyecto PMDM Tema 3 (`Programación Multimedia y Dispositivos Móviles`). Este proyecto tiene como 
 objetivo demostrar la implementación de un sistema de gestión de restaurantes utilizando el patrón 
-de diseño Modelo-Vista-Controlador (`MVC`). A lo largo de esta documentación, exploraremos las 
-clases y componentes clave del proyecto, describiendo sus funciones y responsabilidades.
+de diseño Modelo-Vista-Controlador (`MVC`). La aplicación permite realizar operaciones CRUD (Crear,
+Leer, Actualizar, Eliminar) sobre una lista de restaurantes. A lo largo de esta documentación, 
+exploraremos las clases y componentes clave del proyecto, describiendo sus funciones y 
+responsabilidades.
+
+
+
 
 ## Descripción General
 
 El proyecto está estructurado en varias clases que representan las capas del patrón `MVC`: modelos 
-para los datos de restaurantes y usuarios, vistas para la interfaz  de usuario, y controladores 
+para los datos de restaurantes y usuarios, vistas para la interfaz de usuario, y controladores 
 para gestionar la lógica de negocio y las interacciones entre modelos y vistas.
 
 
@@ -47,25 +52,38 @@ edición y eliminación.
 
 La clase `Controller` actúa como el controlador principal, orquestando la lógica de negocio y las 
 interacciones con la interfaz de usuario. Se encarga de la gestión de datos y la coordinación entre 
-modelos y vistas.
+modelos y vistas, algunos de sus métodos clave incluyen:
 
 #### Métodos
 
 - `initData`: Inicializa los datos de la lista de restaurantes.
-- `loggOut`: Muestra mensajes de registro y presenta datos en pantalla.
-- `setAdapter`: Configura el adaptador para el RecyclerView.
+- `iniciar`: Configura el adaptador y el`RecyclerView`.
 - `delRestaurant`: Gestiona la lógica para eliminar un restaurante.
 - `updateRestaurant`: Gestiona la lógica para actualizar un restaurante.
 - `addRestaurant`: Añade un nuevo restaurante a la lista.
-- `back`: Cierra la actividad actual y vuelve a la actividad anterior.
+- `mostrarDialogoEliminarRestaurante`: Muestra un diálogo de confirmación para eliminar un
+  restaurante.
+- `mostrarDialogoEditarRestaurante`: Muestra un diálogo de edición para un restaurante
+  existente.
+- `mostrarDialogoNewRestaurant`: Muestra un diálogo para agregar un nuevo restaurante.
+
+
+## Fragmentos y Actividades
+
+- `RestaurantesFragment`: Muestra la lista de restaurantes utilizando el patrón MVC.
+- `Login`: Maneja la autenticación de usuarios y redirige al `MainActivity` con la 
+  información del usuario autenticado.
+- `MainActivity`: La actividad principal que incluye la navegación entre fragmentos.
+
 
 ## Clases de Datos
 
-### DaoRestaurant y Repository
+### `DaoRestaurant` y `Repository`
 
-#### Descripción
-`DaoRestaurant` proporciona métodos para acceder a los datos de restaurantes, mientras que 
-`Repository` almacena la lista predefinida de restaurantes.
+Estas clases gestionan el acceso a los datos de restaurantes. `DaoRestaurant` proporciona 
+métodos para acceder a los datos de la base de datos, mientras que `Repository` almacena 
+la lista predefinida de restaurantes.
+
 
 ### User y UserRepository
 
@@ -82,12 +100,10 @@ Clases de modelo que representan datos de restaurantes y usuarios respectivament
 
 ## Conclusiones y Futuras Mejoras
 
-En resumen, este proyecto demuestra la implementación de un sistema de gestión de restaurantes 
-utilizando el patrón MVC. Se han diseñado clases específicas para manejar la lógica de negocio, la 
-interfaz de usuario y los datos. Futuras mejoras podrían incluir la expansión de las 
-funcionalidades, una interfaz de usuario más intuitiva y una mayor modularidad en el código. La 
-documentación proporcionada sirve como guía para comprender la estructura y el propósito de cada 
-componente del proyecto.
+Este proyecto demuestra la implementación de un sistema de gestión de restaurantes con funcionalidades CRUD. 
+Se ha estructurado siguiendo el patrón MVC, lo que facilita la modularidad y el mantenimiento del código. 
+Como futuras mejoras, se podría considerar la expansión de las funcionalidades, una interfaz de usuario más 
+intuitiva y una mayor modularidad del código.
 
 ## Imagen de ejecucion de la aplicacion 
 
@@ -102,7 +118,28 @@ componente del proyecto.
 
 ## RecycleView
 
+![img](./imagenes/img_3.png)
+___
+
+## Navigation drawers
+
+![img](./imagenes/img_4.png)
+
+![img](./imagenes/img_7.png)
+
+![img](./imagenes/img_8.png)
+
+## Dialogs
+
+![img](./imagenes/img_10.png)
+
+![img](./imagenes/img_9.png)
 ![img](./imagenes/img_2.png)
+
+## Fragments
+![img](./imagenes/img_5.png)
+
+![img](./imagenes/img_6.png)
 
 ____
 

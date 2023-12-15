@@ -1,16 +1,24 @@
 package com.john.proyecto_pmdm_john_2023_2024.controller
 
+
+
 import android.content.Context
 import com.john.proyecto_pmdm_john_2023_2024.adapter.AdapterRestaurant
 import android.widget.Toast
-import com.john.proyecto_pmdm_john_2023_2024.MainActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.dao.DaoRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.dialogues.DialogDeleteRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.dialogues.DialogEditRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.dialogues.DialogNewRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.models.Restaurant
 
-class Controller(private val context: Context){
+class Controller(private val context: Context):DialogEditRestaurant.EditRestaurantDialogListener{
     lateinit var listRestaurants : MutableList<Restaurant> //lista de objetos
     init {
         initData()
+
     }
     fun initData(){
         // listHotels = DaoHotels2.myDao.toMutableList()
@@ -24,72 +32,153 @@ class Controller(private val context: Context){
         }
     }
 
+    /*
+    fun setAdapter(recicle : RecyclerView) {
+        val myActivity = context as MainActivity2
+        myActivity.binding.appBarMain2.fab.setOnClickListener{ view ->
+            addRestaurant()
+            Snackbar.make(view, "Restaurante añadido", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+
+        recicle.adapter = AdapterRestaurant(listRestaurants,{pos -> delRestaurant(pos,recicle)},{pos -> updateRestaurant(pos,recicle)})
+    }
+    */
+
+
     // Cargamos nuestro AdapterHotgel al adapter del RecyclerView
-    fun setAdapter() {
-        val myActivity = context as MainActivity
-        myActivity.binding.myRecyclerView.adapter = AdapterRestaurant(listRestaurants,
-            { pos -> delRestaurant(pos) }, { pos -> updateRestaurant(pos) })
 
-
-    }
-
-    fun delRestaurant(pos: Int) {
-        val myActivity = context as MainActivity
-        val adapter = myActivity.binding.myRecyclerView.adapter as AdapterRestaurant
-
-        Toast.makeText(context, "Borrado el Restaurante de la posición $pos", Toast.LENGTH_LONG).show()
-
-        listRestaurants.removeAt(pos)
-        adapter.notifyItemRemoved(pos)
-        adapter.notifyDataSetChanged()
-    }
-
-
-    fun updateRestaurant(pos: Int) {
-        val myActivity = context as MainActivity
-        val adapter = myActivity.binding.myRecyclerView.adapter as AdapterRestaurant
-
-        val RestaurantToUpdate = listRestaurants[pos]
-
-        // Implementa la lógica para la actualización aquí
-        val restaurant = Restaurant(
-            "Panaceite",  // Puedes solicitar al usuario que ingrese un nuevo nombre
-            RestaurantToUpdate.city,
-            RestaurantToUpdate.province,
-            "953 24 06 30",
-            "https://media-cdn.tripadvisor.com/media/photo-s/0d/9b/47/ac/" +
-                    "el-bar-y-su-terraza.jpg"
-        )
-        Toast.makeText(context, "Actualizado el Restaurante de la posición $pos", Toast.LENGTH_LONG).show()
-
-        // Actualiza el hotel en la lista
-        listRestaurants[pos] = restaurant
-
-        // Notifica al adaptador sobre el cambio
-        adapter.notifyItemChanged(pos)
-    }
-
-    fun addRestaurant() {
-        val myActivity = context as MainActivity
-        //myActivity.binding.myRecyclerView.adapter = AdapterRestaurant(listRestaurants,
-           // { pos -> delRestaurant(pos) }, { pos -> updateRestaurant(pos) })
-
-            Toast.makeText(context, "Creado un nuevo Restaurante ", Toast.LENGTH_LONG).show()
-            listRestaurants.add(
-                Restaurant("La tabernilla de Jose",
-                    "Jaén",
-                    "Jaén",
-                    " 678 67 51 35",
-                    "https://lh5.googleusercontent.com/p/AF1QipNUpR_WozbYMw4JO6loQlvAwr9Xdybxa7Uq6qln"))
-            myActivity.binding.myRecyclerView.adapter?.notifyItemInserted(listRestaurants.size)
-        setAdapter()
+    fun iniciar(recyclerView : RecyclerView) {
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = AdapterRestaurant(listRestaurants,
+            { pos -> delRestaurant(pos,recyclerView) }, { pos -> updateRestaurant(pos,recyclerView)})
 
     }
 
-    fun back() {
-        val myActivity = context as MainActivity
-        myActivity.finish()
+    fun delRestaurant(pos: Int, recyclerView: RecyclerView) {
+        // Llamada para mostrar el diálogo de eliminación
+        mostrarDialogoEliminarRestaurante(pos,recyclerView)
+
     }
 
+    fun updateRestaurant(pos: Int, recyclerView: RecyclerView) {
+        //llamada para mostrar el dialogo de edición
+        mostrarDialogoEditarRestaurante(pos,recyclerView)
+    }
+
+
+    fun addRestaurant(recyclerView: RecyclerView) {
+        mostrarDialogoNewRestaurant(recyclerView)
+    }
+
+    // Nueva función para mostrar el diálogo de eliminación
+    private fun mostrarDialogoEliminarRestaurante(pos: Int, recyclerView: RecyclerView) {
+        val dialog = DialogDeleteRestaurant(pos, listRestaurants[pos].name, this)
+        dialog.setDeleteRestaurantDialogListener(object :
+            DialogDeleteRestaurant.DeleteRestaurantDialogListener {
+            override fun onDialogPositiveClick(pos: Int) {
+                val adapter = recyclerView.adapter  as AdapterRestaurant
+                Toast.makeText(context, "Borrado el Restaurante ${listRestaurants[pos].name}" +
+                        " de la posición $pos", Toast.LENGTH_LONG).show()
+                listRestaurants.removeAt(pos)
+                // Notificar al adaptador sobre el cambio
+                adapter.notifyItemRemoved(pos)
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onDialogNegativeClick() {
+                Toast.makeText(context, "Cancelado el borrado de  " +
+                        "${listRestaurants[pos].name} de la posición $pos", Toast.LENGTH_LONG).show()
+            }
+        })
+        dialog.show((context as AppCompatActivity).supportFragmentManager, "DialogDeleteRestaurant")
+    }
+
+    private fun mostrarDialogoEditarRestaurante(pos: Int, recyclerView: RecyclerView) {
+        if (pos in 0 until listRestaurants.size) {
+            val dialog = DialogEditRestaurant(pos, listRestaurants[pos], this)
+            dialog.setEditRestaurantDialogListener(object :
+            DialogEditRestaurant.EditRestaurantDialogListener{
+                override fun onDialogPositiveClick(
+                    pos: Int,
+                    newName: String,
+                    newCity: String,
+                    newProvince: String,
+                    newPhoneNumber: String,
+                    newImageUrl: String
+                ) {
+
+                    // Lógica para guardar la edición del restaurante
+                    val adapter = recyclerView.adapter as AdapterRestaurant
+                    val editedRestaurant = Restaurant(newName, newCity, newProvince,
+                        newPhoneNumber, newImageUrl)
+                    listRestaurants[pos] = editedRestaurant
+                    adapter.notifyItemChanged(pos)
+                    Toast.makeText(context, "Restaurante editado correctamente",
+                        Toast.LENGTH_LONG).show()
+                }
+
+                override fun onDialogNegativeClick() {
+                    // Acciones después de que el usuario hace clic en "Cancelar"
+                    Toast.makeText(context, "Edición del restaurante cancelada",
+                        Toast.LENGTH_LONG).show()
+                }
+
+            })
+
+            dialog.show((context as AppCompatActivity).supportFragmentManager,
+                "DialogEditRestaurant")
+        } else {
+            // Manejar el caso en el que pos no es válido
+            Toast.makeText(context, "Posición no válida", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun mostrarDialogoNewRestaurant(recyclerView: RecyclerView){
+        val dialog = DialogNewRestaurant(object : DialogNewRestaurant.NewRestaurantDialogListener {
+            override fun onDialogPositiveClick(
+                newName: String,
+                newCity: String,
+                newProvince: String,
+                newPhoneNumber: String,
+                newImageUrl: String
+            ) {
+                // agregamos un nuevo restaurante
+                val newRestaurant = Restaurant(newName, newCity, newProvince, newPhoneNumber,
+                    newImageUrl)
+                listRestaurants.add(newRestaurant)
+
+                // Notificamos al adaptador sobre el cambio
+                val adapter = recyclerView.adapter as AdapterRestaurant
+                adapter.notifyItemInserted(listRestaurants.size - 1)
+
+                Toast.makeText(context, "Nuevo restaurante agregado", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onDialogNegativeClick() {
+                // Acciones después de que el usuario hace clic en "Cancelar"
+                Toast.makeText(context, "Cancelada la creacion de un nuevo Restaurante",
+                    Toast.LENGTH_LONG).show()
+            }
+        })
+
+        dialog.show((context as AppCompatActivity).supportFragmentManager, "DialogNewRestaurant")
+    }
+
+    override fun onDialogPositiveClick(
+        pos: Int,
+        newName: String,
+        newCity: String,
+        newProvince: String,
+        newPhoneNumber: String,
+        newImageUrl: String
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onDialogNegativeClick() {
+        TODO("Not yet implemented")
+    }
 
 }
+
