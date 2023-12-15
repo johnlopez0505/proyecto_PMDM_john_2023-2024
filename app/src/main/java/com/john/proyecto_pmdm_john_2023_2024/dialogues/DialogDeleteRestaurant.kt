@@ -5,9 +5,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.controller.Controller
-import com.john.proyecto_pmdm_john_2023_2024.fragments.RestaurantesFragment
 
 
 class DialogDeleteRestaurant(

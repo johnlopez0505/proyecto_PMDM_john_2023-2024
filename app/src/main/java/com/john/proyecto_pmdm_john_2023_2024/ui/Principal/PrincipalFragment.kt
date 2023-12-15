@@ -1,4 +1,4 @@
-package com.john.proyecto_pmdm_john_2023_2024.ui.gallery
+package com.john.proyecto_pmdm_john_2023_2024.ui.Principal
 
 import android.os.Bundle
 import android.view.LayoutInflater

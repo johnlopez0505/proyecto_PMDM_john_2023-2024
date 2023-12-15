@@ -1,6 +1,6 @@
 package com.john.proyecto_pmdm_john_2023_2024.dialogues
 
-import android.annotation.SuppressLint
+
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.john.proyecto_pmdm_john_2023_2024.R
-import com.john.proyecto_pmdm_john_2023_2024.controller.Controller
 import com.john.proyecto_pmdm_john_2023_2024.models.Restaurant
 
 class DialogEditRestaurant(
@@ -33,7 +32,8 @@ class DialogEditRestaurant(
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.edit_restaurant_dialog_listener, null)
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout
+            .edit_restaurant_dialog_listener, null)
         newNameEditText = view.findViewById(R.id.editTextNewName)
         newCityEditText = view.findViewById(R.id.editTextNewCity)
         newProvinceEditText = view.findViewById(R.id.editTextNewProvince)
@@ -48,16 +48,17 @@ class DialogEditRestaurant(
         newImageUrlEditText.setText(restaurant.image)
 
         return AlertDialog.Builder(requireContext())
+
             .setView(view)
             .setTitle("Editar restaurante")
             .setPositiveButton("Guardar") { dialog, id ->
-                val newName = newNameEditText.text.toString()
-                val newCity = newCityEditText.text.toString()
-                val newProvince = newProvinceEditText.text.toString()
-                val newPhoneNumber = newPhoneNumberEditText.text.toString()
-                val newImageUrl = newImageUrlEditText.text.toString()
-
-                onEditRestaurantDialogListener?.onDialogPositiveClick(pos, newName, newCity, newProvince, newPhoneNumber, newImageUrl)
+                val newName = newNameEditText.text.toString().trim()
+                val newCity = newCityEditText.text.toString().trim()
+                val newProvince = newProvinceEditText.text.toString().trim()
+                val newPhoneNumber = newPhoneNumberEditText.text.toString().trim()
+                val newImageUrl = newImageUrlEditText.text.toString().trim()
+                onEditRestaurantDialogListener?.onDialogPositiveClick(pos, newName, newCity,
+                    newProvince, newPhoneNumber, newImageUrl)
             }
             .setNegativeButton("Cancelar") { dialog, id ->
                 onEditRestaurantDialogListener?.onDialogNegativeClick()

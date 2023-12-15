@@ -1,4 +1,4 @@
-package com.john.proyecto_pmdm_john_2023_2024.ui.slideshow
+package com.john.proyecto_pmdm_john_2023_2024.ui.Login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentSlideshowBinding
+import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentLoginBinding
 
-class SlideshowFragment : Fragment() {
+class LoginFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding : FragmentLoginBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,12 +21,12 @@ class SlideshowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+            ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
+        val textView: TextView = binding.textLogin
         slideshowViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }

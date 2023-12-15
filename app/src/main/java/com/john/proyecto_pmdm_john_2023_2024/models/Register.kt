@@ -1,12 +1,12 @@
-package com.john.proyecto_pmdm_john_2023_2024
+package com.john.proyecto_pmdm_john_2023_2024.models
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.john.proyecto_pmdm_john_2023_2024.Login
 import com.john.proyecto_pmdm_john_2023_2024.dao.DaoUser
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityRegisterBinding
-import com.john.proyecto_pmdm_john_2023_2024.models.User
 
 class Register : AppCompatActivity() {
     private lateinit var bindingRegister : ActivityRegisterBinding
@@ -30,10 +30,10 @@ class Register : AppCompatActivity() {
 
 
     private fun comprobarEstado() {
-        val name = bindingRegister.editTextUsername.text.toString()
-        val email = bindingRegister.editTextEmail.text.toString()
-        val password = bindingRegister.editTextPassword.text.toString()
-        val confirmPassword = bindingRegister.editTextTextPassword2.text.toString()
+        val name = bindingRegister.editTextUsername.text.toString().trim()
+        val email = bindingRegister.editTextEmail.text.toString().trim()
+        val password = bindingRegister.editTextPassword.text.toString().trim()
+        val confirmPassword = bindingRegister.editTextTextPassword2.text.toString().trim()
         // Verificar que ningún campo esté vacío
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             // Mostrar un mensaje de error si algún campo está vacío

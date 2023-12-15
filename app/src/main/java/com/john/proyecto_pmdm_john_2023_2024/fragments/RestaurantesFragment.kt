@@ -17,8 +17,7 @@ class RestaurantesFragment : Fragment() {
     lateinit var binding: FragmentRestaurantesBinding
     lateinit var recyclerView : RecyclerView
     lateinit var controller: Controller
-    private lateinit var txtName     : TextView
-    private lateinit var txtEmail : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,9 +35,7 @@ class RestaurantesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         init()
-        login()
     }
 
     fun init(){
@@ -51,12 +48,7 @@ class RestaurantesFragment : Fragment() {
        }
 
     }
-    private fun login() {
-        //txtName = bindingActiviti.navView.findViewById(R.id.text_user_nav_header)
-        //val name = getIntent().getStringExtra("name")
-        //if (name!= null){
-         //   txtName.text = "$name"
-        }
+
 }
 
 

@@ -14,15 +14,15 @@
 
     <fragment
         android:id="@+id/nav_principal"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.gallery.PrincipalFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.Principal.PrincipalFragment"
         android:label="@string/menu_principal"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_login"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.Login.LoginFragment"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/nav_restaurantes"
         android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.RestaurantesFragment"

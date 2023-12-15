@@ -1,9 +1,8 @@
 package com.john.proyecto_pmdm_john_2023_2024.controller
 
 
-import android.annotation.SuppressLint
-import android.content.Context
 
+import android.content.Context
 import com.john.proyecto_pmdm_john_2023_2024.adapter.AdapterRestaurant
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -62,34 +61,16 @@ class Controller(private val context: Context):DialogEditRestaurant.EditRestaura
 
     }
 
-
     fun updateRestaurant(pos: Int, recyclerView: RecyclerView) {
         //llamada para mostrar el dialogo de edición
         mostrarDialogoEditarRestaurante(pos,recyclerView)
     }
 
 
-
     fun addRestaurant(recyclerView: RecyclerView) {
         mostrarDialogoNewRestaurant(recyclerView)
-        /*
-        val adapter = recyclerView.adapter as AdapterRestaurant
-
-        //myActivity.binding.myRecyclerView.adapter = AdapterRestaurant(listRestaurants,
-           // { pos -> delRestaurant(pos) }, { pos -> updateRestaurant(pos) })
-
-            Toast.makeText(context, "Creado un nuevo Restaurante ", Toast.LENGTH_LONG).show()
-            listRestaurants.add(
-                Restaurant("La tabernilla de Jose",
-                    "Jaén",
-                    "Jaén",
-                    " 678 67 51 35",
-                    "https://lh5.googleusercontent.com/p/AF1QipNUpR_WozbYMw4JO6loQlvAwr9Xdybxa7Uq6qln"))
-            //myActivity.binding.appBarMain2.restaurantesFragment.myRecyclerView.adapter?.notifyItemInserted(listRestaurants.size)
-        adapter.notifyItemInserted(listRestaurants.size)
-        */
-
     }
+
     // Nueva función para mostrar el diálogo de eliminación
     private fun mostrarDialogoEliminarRestaurante(pos: Int, recyclerView: RecyclerView) {
         val dialog = DialogDeleteRestaurant(pos, listRestaurants[pos].name, this)
@@ -126,6 +107,7 @@ class Controller(private val context: Context):DialogEditRestaurant.EditRestaura
                     newPhoneNumber: String,
                     newImageUrl: String
                 ) {
+
                     // Lógica para guardar la edición del restaurante
                     val adapter = recyclerView.adapter as AdapterRestaurant
                     val editedRestaurant = Restaurant(newName, newCity, newProvince,
@@ -143,6 +125,7 @@ class Controller(private val context: Context):DialogEditRestaurant.EditRestaura
                 }
 
             })
+
             dialog.show((context as AppCompatActivity).supportFragmentManager,
                 "DialogEditRestaurant")
         } else {

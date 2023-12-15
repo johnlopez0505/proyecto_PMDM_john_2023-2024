@@ -31,7 +31,8 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_principal">Principal</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_login">Login</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="principal">Principal</string>
+
 </resources>

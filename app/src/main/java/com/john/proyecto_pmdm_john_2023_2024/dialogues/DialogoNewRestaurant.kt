@@ -25,7 +25,8 @@ class DialogNewRestaurant(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.edit_restaurant_dialog_listener, null)
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout
+            .edit_restaurant_dialog_listener, null)
         val newNameEditText: EditText = view.findViewById(R.id.editTextNewName)
         val newCityEditText: EditText = view.findViewById(R.id.editTextNewCity)
         val newProvinceEditText: EditText = view.findViewById(R.id.editTextNewProvince)
@@ -41,8 +42,8 @@ class DialogNewRestaurant(
                 val newProvince = newProvinceEditText.text.toString()
                 val newPhoneNumber = newPhoneNumberEditText.text.toString()
                 val newImageUrl = newImageUrlEditText.text.toString()
-
-                onNewRestaurantDialogListener?.onDialogPositiveClick(newName, newCity, newProvince, newPhoneNumber, newImageUrl)
+                onNewRestaurantDialogListener?.onDialogPositiveClick(newName, newCity,
+                    newProvince, newPhoneNumber, newImageUrl)
             }
             .setNegativeButton("Cancelar") { dialog, id ->
                 onNewRestaurantDialogListener?.onDialogNegativeClick()

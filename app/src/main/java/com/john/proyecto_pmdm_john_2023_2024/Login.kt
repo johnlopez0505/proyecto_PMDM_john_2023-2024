@@ -2,13 +2,13 @@ package com.john.proyecto_pmdm_john_2023_2024
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.john.proyecto_pmdm_john_2023_2024.dao.DaoUser
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityLoginBinding
 import com.john.proyecto_pmdm_john_2023_2024.fragments.RestaurantesFragment
+import com.john.proyecto_pmdm_john_2023_2024.models.MainActivity
+import com.john.proyecto_pmdm_john_2023_2024.models.Register
 
 
 class Login : AppCompatActivity() {
@@ -37,20 +37,21 @@ class Login : AppCompatActivity() {
     private fun validarCredenciales() {
         val user = bindingLogin.editTextUsername.text.toString()
         val password = bindingLogin.editTextPassword.text.toString()
-        val email = findViewById<EditText>(R.id.edit_text_email)
-        val usuarioEncontrado =  DaoUser.myDao.getDataUser().find { it.name==user && it.password ==password }
 
+        val usuarioEncontrado =  DaoUser.myDao.getDataUser().find { it.name==user && it.password ==password }
+        val email = usuarioEncontrado?.email.toString()
         if (usuarioEncontrado != null) {
             // Guardar el último usuario ingresado
             guardarUltimoUsuario(user, password)
             // El usuario ha iniciado sesión con éxito
             // Credenciales válidas, iniciar Activity principal
             val intent = Intent(this, MainActivity::class.java)
-            val intenFragment = Intent(this, RestaurantesFragment::class.java).also {
-                it.putExtra("name",user)
-                //it.putExtra("email",email)
+            val intenFragment = Intent(this, RestaurantesFragment::class.java).apply{
+                // Pasa el usuario e imail como argumento al Activity principal
+                intent.putExtra("name",user)
+                intent.putExtra("email",email)
             }
-            intent.putExtra("name", user)  // Pasa el usuario como argumento al Activity principal
+
             startActivity(intent)
         } else {
             // Las credenciales no son válidas
