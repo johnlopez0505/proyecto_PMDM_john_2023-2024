@@ -45,4 +45,14 @@
         android:id="@+id/shorts"
         android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.ShortsFragment"
         android:label="Shorts" />
+    <fragment
+        android:id="@+id/buscar"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.BuscarFragment"
+        android:label="@string/buscar"
+        tools:layout="@layout/fragment_buscar" />
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.SettingsFragment"
+        android:label="settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

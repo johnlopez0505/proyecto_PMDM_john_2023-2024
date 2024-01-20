@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
@@ -15,7 +16,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -30,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var binding: ActivityMainBinding
     private lateinit var controller : Controller
+    private lateinit var navController: NavController
+    private lateinit var navHostFragment: NavHostFragment
     private lateinit var name : TextView
     private lateinit var email : TextView
     private lateinit var imagen : ImageView
@@ -37,8 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         init() //inicializo la clase
     }
@@ -50,11 +53,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     private fun init(){
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as
+                NavHostFragment
+        navController = navHostFragment.navController
+
         setSupportActionBar(binding.appBarMain.toolbar)
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -63,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         login()
         initFab()
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         binding.appBarMain.appBottomBar.bottomNavigationView.background = null
@@ -142,5 +151,20 @@ class MainActivity : AppCompatActivity() {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         dialog.window!!.setGravity(Gravity.BOTTOM)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.buscar -> {
+                navController.navigate(R.id.buscar)
+                true
+            }
+            R.id.settings -> {
+                navController.navigate(R.id.settings)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

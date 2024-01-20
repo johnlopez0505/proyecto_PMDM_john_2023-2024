@@ -121,13 +121,15 @@ intuitiva y una mayor modularidad del código.
 ![img](./imagenes/img_3.png)
 ___
 
-## Navigation drawers
+## Navigation drawers, button,toolbar
 
 ![img](./imagenes/img_4.png)
 
 ![img](./imagenes/img_7.png)
 
 ![img](./imagenes/img_8.png)
+
+![img](./imagenes/img_11.png)
 
 ## Dialogs
 
@@ -143,6 +145,6 @@ ___
 
 ____
 
-### Enlace al repositorio
+### Enlace al repositorio, la version en la rama dev
 
 [REPOSITORIO:https://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024.git](https://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024.git)

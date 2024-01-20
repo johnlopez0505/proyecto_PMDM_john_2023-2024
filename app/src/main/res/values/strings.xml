@@ -37,5 +37,10 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="principal">Principal</string>
     <string name="logout">Logout</string>
+    <string name="buscar">Buscar</string>
+    <string name="estamos_en_el_fragmento_buscar">Estamos en el fragmento buscar</string>
+    <string name="estamos_en_el_fragment_subscription">EStamos en el fragment subscription</string>
+    <string name="estamos_en_el_fragmento_library">Estamos en el fragmento library</string>
+    <string name="estamos_en_el_fragment_shorts">Estamos en el fragment shorts</string>
 
 </resources>

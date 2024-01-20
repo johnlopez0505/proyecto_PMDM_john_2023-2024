@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SubscriptionFragment">
+    tools:context=".fragments.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/action_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/estamos_en_el_fragment_subscription" />
+        android:text="Estamos en el fragment settings" />
 
 </FrameLayout>
