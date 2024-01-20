@@ -1,18 +1,26 @@
 package com.john.proyecto_pmdm_john_2023_2024.models
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import com.google.android.material.navigation.NavigationView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.controller.Controller
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityMainBinding
@@ -42,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main2)
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
@@ -52,14 +60,19 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
 
 
+
         login()
-        val navController = findNavController(R.id.nav_host_fragment_content_main2)
+        initFab()
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        binding.appBarMain.appBottomBar.bottomNavigationView.background = null
+        binding.appBarMain.appBottomBar.bottomNavigationView.setupWithNavController( navController )
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_principal, R.id.nav_restaurantes
+                R.id.nav_home, R.id.nav_principal, R.id.nav_restaurantes,R.id.shorts,
+                R.id.library, R.id.subscription
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -89,9 +102,45 @@ class MainActivity : AppCompatActivity() {
         if (name1 != null || email1 != null || imagen != null) {
             name.text = name1
             email.text = email1
-            imagen.setImageResource(R.mipmap.p1_round)
+            imagen.setImageResource(R.mipmap.logo1_round)
         }
 
     }
-
+    private fun initFab(){
+        binding.appBarMain.appBottomBar.fab.setOnClickListener{
+            showBottomDialog()
+        }
+    }
+    private fun showBottomDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.bottomsheetlayout)
+        val videoLayout = dialog.findViewById<LinearLayout>(R.id.layoutVideo)
+        val shortsLayout = dialog.findViewById<LinearLayout>(R.id.layoutShorts)
+        val liveLayout = dialog.findViewById<LinearLayout>(R.id.layoutLive)
+        val cancelButton = dialog.findViewById<ImageView>(R.id.cancelButton)
+        videoLayout.setOnClickListener {
+            dialog.dismiss()
+            Toast.makeText(this, "Upload a Video is clicked", Toast.LENGTH_SHORT)
+                .show()
+        }
+        shortsLayout.setOnClickListener {
+            dialog.dismiss()
+            Toast.makeText(this, "Create a short is Clicked", Toast.LENGTH_SHORT)
+                .show()
+        }
+        liveLayout.setOnClickListener {
+            dialog.dismiss()
+            Toast.makeText(this, "Go live is Clicked", Toast.LENGTH_SHORT).show()
+        }
+        cancelButton.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setGravity(Gravity.BOTTOM)
+    }
 }

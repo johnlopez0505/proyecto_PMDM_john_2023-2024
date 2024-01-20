@@ -20,6 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".models.MainActivity"
+            android:theme="@style/Theme.BottomNavigationDemo"
             android:exported="false"/>
         <activity
             android:name=".Login"
@@ -29,6 +30,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
     </application>
 

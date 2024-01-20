@@ -38,7 +38,8 @@ class Login : AppCompatActivity() {
         val user = bindingLogin.editTextUsername.text.toString()
         val password = bindingLogin.editTextPassword.text.toString()
 
-        val usuarioEncontrado =  DaoUser.myDao.getDataUser().find { it.name==user && it.password ==password }
+        val usuarioEncontrado =  DaoUser.myDao.getDataUser().find {
+                    it.name==user && it.password ==password }
         val email = usuarioEncontrado?.email.toString()
         if (usuarioEncontrado != null) {
             // Guardar el último usuario ingresado
@@ -46,7 +47,8 @@ class Login : AppCompatActivity() {
             // El usuario ha iniciado sesión con éxito
             // Credenciales válidas, iniciar Activity principal
             val intent = Intent(this, MainActivity::class.java)
-            val intenFragment = Intent(this, RestaurantesFragment::class.java).apply{
+            val intenFragment = Intent(this,
+                    RestaurantesFragment::class.java).apply{
                 // Pasa el usuario e imail como argumento al Activity principal
                 intent.putExtra("name",user)
                 intent.putExtra("email",email)
@@ -55,7 +57,8 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         } else {
             // Las credenciales no son válidas
-            Toast.makeText(this, "Credenciales no válidas", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Credenciales no válidas",
+                    Toast.LENGTH_SHORT).show()
         }
 
     }

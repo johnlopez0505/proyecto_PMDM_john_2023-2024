@@ -4,28 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     android:label="@string/menu_principal"
-    app:startDestination="@id/nav_restaurantes">
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.home.HomeFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_principal"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.Principal.PrincipalFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.PrincipalFragment"
         android:label="@string/menu_principal"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_principal" />
 
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.Login.LoginFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.LoginFragment"
         android:label="@string/menu_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/nav_restaurantes"
         android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.RestaurantesFragment"
-        android:label="Restaurantes"
+        android:label="@string/menu_restaurantes"
         tools:layout="@layout/fragment_restaurantes" />
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.LogoutFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_logout" />
+    <fragment
+        android:id="@+id/subscription"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.SubscriptionFragment"
+        android:label="Subscription" />
+    <fragment
+        android:id="@+id/library"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.LibraryFragment"
+        android:label="Library" />
+    <fragment
+        android:id="@+id/shorts"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.ShortsFragment"
+        android:label="Shorts" />
 </navigation>

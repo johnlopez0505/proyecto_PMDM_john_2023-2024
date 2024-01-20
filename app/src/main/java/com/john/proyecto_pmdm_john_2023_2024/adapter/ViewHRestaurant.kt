@@ -37,5 +37,4 @@ class ViewHRestaurant (view: View, var deleteOnClick:
             deleteOnClick(position)
         }
     }
-
 }
