@@ -3,18 +3,18 @@ package com.john.proyecto_pmdm_john_2023_2024.controller
 
 
 import android.content.Context
-import com.john.proyecto_pmdm_john_2023_2024.adapter.AdapterRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.AdapterRestaurant
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.john.proyecto_pmdm_john_2023_2024.dao.DaoRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.dialogues.DialogDeleteRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.dialogues.DialogEditRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.dialogues.DialogNewRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.models.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.DaoRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogDeleteRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogEditRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogNewRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 
-class Controller(private val context: Context):DialogEditRestaurant.EditRestaurantDialogListener{
+class Controller(private val context: Context): DialogEditRestaurant.EditRestaurantDialogListener{
     lateinit var listRestaurants : MutableList<Restaurant> //lista de objetos
     init {
         initData()
@@ -22,7 +22,7 @@ class Controller(private val context: Context):DialogEditRestaurant.EditRestaura
     }
     fun initData(){
         // listHotels = DaoHotels2.myDao.toMutableList()
-        listRestaurants = DaoRestaurant. myDao.getDataRestaurant(). toMutableList() //llamamos al singleton.
+        listRestaurants = DaoRestaurant. myDao.listRestaurant(). toMutableList() //llamamos al singleton.
 
     }
     fun loggOut() {

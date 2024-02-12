@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LogoutFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.modelView.LogoutFragment">
 
 
     <TextView
@@ -15,8 +16,13 @@
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_width="251dp"
+        android:layout_height="54dp"
+        android:layout_below="@id/editTextPassword"
+        android:background="@drawable/boton_login"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
         android:layout_gravity="center"
         android:text="Logout" />
 

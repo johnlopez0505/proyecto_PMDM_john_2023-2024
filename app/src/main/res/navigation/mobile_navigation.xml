@@ -8,51 +8,51 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.HomeFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_principal"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.PrincipalFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.PrincipalFragment"
         android:label="@string/menu_principal"
         tools:layout="@layout/fragment_principal" />
 
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.LoginFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.LoginFragment"
         android:label="@string/menu_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/nav_restaurantes"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.RestaurantesFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.restaurante.RestaurantesFragment"
         android:label="@string/menu_restaurantes"
         tools:layout="@layout/fragment_restaurantes" />
     <fragment
         android:id="@+id/nav_logout"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.LogoutFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.LogoutFragment"
         android:label="@string/menu_logout"
         tools:layout="@layout/fragment_logout" />
     <fragment
         android:id="@+id/subscription"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.SubscriptionFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.SubscriptionFragment"
         android:label="Subscription" />
     <fragment
         android:id="@+id/library"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.LibraryFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.LibraryFragment"
         android:label="Library" />
     <fragment
         android:id="@+id/shorts"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.ShortsFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.ShortsFragment"
         android:label="Shorts" />
     <fragment
         android:id="@+id/buscar"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.BuscarFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.BuscarFragment"
         android:label="@string/buscar"
         tools:layout="@layout/fragment_buscar" />
     <fragment
         android:id="@+id/settings"
-        android:name="com.john.proyecto_pmdm_john_2023_2024.fragments.SettingsFragment"
+        android:name="com.john.proyecto_pmdm_john_2023_2024.ui.modelView.SettingsFragment"
         android:label="settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>
