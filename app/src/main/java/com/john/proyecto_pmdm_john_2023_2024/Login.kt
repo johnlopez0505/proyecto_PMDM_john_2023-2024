@@ -1,6 +1,8 @@
 package com.john.proyecto_pmdm_john_2023_2024
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,7 @@ import com.john.proyecto_pmdm_john_2023_2024.models.Register
 
 class Login : AppCompatActivity() {
     private lateinit var bindingLogin : ActivityLoginBinding
+    private lateinit var shared : SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingLogin = ActivityLoginBinding.inflate(layoutInflater)
@@ -35,6 +38,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun validarCredenciales() {
+        cargarPreferenciasCompartidas()
         val user = bindingLogin.editTextUsername.text.toString()
         val password = bindingLogin.editTextPassword.text.toString()
 
@@ -88,5 +92,17 @@ class Login : AppCompatActivity() {
         val (lastUserName,lastPassword) = getLastUsername()
         bindingLogin.editTextUsername.setText(lastUserName)
         bindingLogin.editTextPassword.setText(lastPassword)
+    }
+    private fun cargarPreferenciasCompartidas(){
+       var fichePreferencias : String = "PreferenciasAppRestaurante"
+        shared = this.getSharedPreferences(fichePreferencias, MODE_PRIVATE)
+    }
+    fun cerrarSesion(){
+        val sharedPreferences:SharedPreferences = getSharedPreferences(getString(R.string.preferencias_fichero_login),
+            MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences.edit()
+        editor.clear()
+        editor.commit()
+        finish()
     }
 }

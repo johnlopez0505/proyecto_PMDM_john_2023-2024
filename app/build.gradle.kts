@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.john.proyecto_pmdm_john_2023_2024"
-        minSdk = 24
+        minSdk = 22
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
