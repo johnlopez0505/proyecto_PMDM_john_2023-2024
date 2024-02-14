@@ -7,7 +7,10 @@ class Restaurant (
     var phone: String,
     var image: String
 )
+
 {
+
+    constructor() : this("", "", "", "", "")
     override fun toString(): String {
         return "Hotel(name='$name', city='$city', province='$province'," +
                 "phone='$phone', image='$image')"
