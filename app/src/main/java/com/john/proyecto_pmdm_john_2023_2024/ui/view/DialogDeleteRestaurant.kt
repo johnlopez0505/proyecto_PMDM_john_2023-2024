@@ -5,13 +5,13 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import com.john.proyecto_pmdm_john_2023_2024.controller.Controller
+import com.john.proyecto_pmdm_john_2023_2024.ui.restaurante.RestaurantViewModel
 
 
 class DialogDeleteRestaurant(
     val pos: Int,
     val name: String,
-    val onDeleteRestaurantDialog: Controller
+    val onDeleteRestaurantDialog: RestaurantViewModel
 ) : DialogFragment() {
 
     // Interfaz para manejar eventos del diálogo

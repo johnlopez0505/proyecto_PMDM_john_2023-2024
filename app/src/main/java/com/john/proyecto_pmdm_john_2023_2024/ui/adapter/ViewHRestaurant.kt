@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ItemRestaurantBinding
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 
-class ViewHRestaurant (view: View, var deleteOnClick:
+class ViewHRestaurant (view: View , var deleteOnClick:
     (Int) -> Unit, var updateOnClick: (Int) -> Unit):
     RecyclerView.ViewHolder (view){
 
@@ -28,7 +28,6 @@ class ViewHRestaurant (view: View, var deleteOnClick:
 
         setOnClickListener(adapterPosition)
     }
-
     fun setOnClickListener(position : Int) {
         binding.btnEdit.setOnClickListener {
             updateOnClick(position)
@@ -37,4 +36,6 @@ class ViewHRestaurant (view: View, var deleteOnClick:
             deleteOnClick(position)
         }
     }
+
+
 }

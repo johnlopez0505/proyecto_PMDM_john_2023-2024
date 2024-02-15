@@ -25,14 +25,14 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.john.proyecto_pmdm_john_2023_2024.R
-import com.john.proyecto_pmdm_john_2023_2024.controller.Controller
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityMainBinding
 import com.john.proyecto_pmdm_john_2023_2024.databinding.NavHeaderMainBinding
+import com.john.proyecto_pmdm_john_2023_2024.ui.restaurante.RestaurantViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var binding: ActivityMainBinding
-    private lateinit var controller : Controller
+    private lateinit var resytauranViewModel: RestaurantViewModel
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var name : TextView
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         initRecyclerView()
-        controller = Controller( this) //Creamos el controler
+        //resytauranViewModel = RestaurantViewModel( this) //Creamos el controler
         //controller.setAdapter(recicle)
         //controller.loggOut() //muestro el log en pantalla
 

@@ -4,7 +4,7 @@ import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.DaoRestauran
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 
 class ListRestaurantUseCase {
-    operator fun invoke(): List<Restaurant>?{
+    operator fun invoke(): List<Restaurant> {
         return  DaoRestaurant.myDao.listRestaurant()
     }
 }

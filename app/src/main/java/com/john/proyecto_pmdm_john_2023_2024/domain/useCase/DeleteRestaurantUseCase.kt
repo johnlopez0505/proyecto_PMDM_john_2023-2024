@@ -4,14 +4,9 @@ import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.DaoRestauran
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 
 class DeleteRestaurantUseCase {
-    private val daoRestaurante = DaoRestaurant
+    private val daoRestaurant = DaoRestaurant.myDao
 
-    private var pos: Int = 0
-
-    fun setPost(pos: Int){
-        this.pos = pos
-    }
-    operator fun invoke(): Restaurant {
-        return  daoRestaurante.myDao.deleteRestaurant(pos)
+    operator fun invoke(pos: Int): List<Restaurant> {
+        return  daoRestaurant.deleteRestaurant(pos)
     }
 }

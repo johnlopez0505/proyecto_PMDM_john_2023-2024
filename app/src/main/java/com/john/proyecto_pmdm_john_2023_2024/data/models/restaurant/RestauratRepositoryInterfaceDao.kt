@@ -4,5 +4,5 @@ interface RestauratRepositoryInterfaceDao {
     fun listRestaurant(): List<Restaurant>
     fun editRestaurant(pos: Int): Restaurant
     fun addRestaurant(restaurant: Restaurant): Restaurant
-    fun deleteRestaurant(pos: Int): Restaurant
+    fun deleteRestaurant(pos: Int): List<Restaurant>
 }

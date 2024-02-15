@@ -6,7 +6,7 @@ import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 
 class RestaurantService : RestaurantServiceInterface {
     companion object {
-        val service: RestaurantService by lazy{ //lazy delega a un primer acceso
+        val restaurantService: RestaurantService by lazy{ //lazy delega a un primer acceso
             RestaurantService() //Me creo sólo este objeto una vez.
         }
     }
@@ -27,6 +27,6 @@ class RestaurantService : RestaurantServiceInterface {
 
     override fun deleteRestaurant(pos: Int): Restaurant {
         // Elimina el restaurante en la posición especificada
-        return Restaurants.listRestauran[pos]
+        return Restaurants.listRestauran[0]
     }
 }
