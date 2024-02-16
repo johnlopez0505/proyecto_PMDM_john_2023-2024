@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.RepositoryRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.ui.restaurante.RestaurantViewModel
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogDeleteRestaurant
+import java.lang.reflect.Constructor
 
-class AdapterRestaurant (
-    private var deleteOnClick: (Int) -> Unit,
-    private var updateOnClick: (Int) -> Unit
+class AdapterRestaurant(private var deleteOnClick: (Int) -> Unit,
+                        private var updateOnClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ViewHRestaurant>(){
-    var restaurantRepository: MutableList<Restaurant> = RepositoryRestaurant.restaurants.toMutableList()//cargo del repsitorio dememoria.
+    var restaurantRepository: List<Restaurant> = RepositoryRestaurant.restaurants//cargo del repsitorio dememoria.
+
+
     /*
     Método que crea la view del ViewHolderHotel
     */
@@ -22,6 +26,7 @@ class AdapterRestaurant (
             layoutInflater.inflate(layoutItemRestaurant, parent, false),
             deleteOnClick,
             updateOnClick
+
         )
 
     }
@@ -33,6 +38,8 @@ class AdapterRestaurant (
     override fun onBindViewHolder(holder: ViewHRestaurant, position: Int) {
         holder.renderize(restaurantRepository[position]) //renderizamos la view.
         //holder.setOnClickListener(position)
+
+
     }
     /*
     Este método, devuelve el número de objetos a representar en el recyclerView.

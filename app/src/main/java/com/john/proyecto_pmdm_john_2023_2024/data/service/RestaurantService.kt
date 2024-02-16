@@ -15,18 +15,16 @@ class RestaurantService : RestaurantServiceInterface {
         return Restaurants.listRestauran
     }
 
-    override fun editRestaurant(pos: Int): Restaurant {
-        return Restaurants.listRestauran[pos]
+    override fun editRestaurant(pos: Int): Int {
+        return pos
     }
 
     override fun addRestaurant(restaurant: Restaurant): Restaurant {
-        // Agrega un restaurante a la lista en Repository
-        RepositoryRestaurant.restaurants = RepositoryRestaurant.restaurants + restaurant
         return restaurant
     }
 
-    override fun deleteRestaurant(pos: Int): Restaurant {
+    override fun deleteRestaurant(pos: Int): Int {
         // Elimina el restaurante en la posición especificada
-        return Restaurants.listRestauran[0]
+        return pos
     }
 }

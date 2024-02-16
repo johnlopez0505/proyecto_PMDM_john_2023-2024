@@ -16,6 +16,7 @@ import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.DeleteRestaurantUseC
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.EditRestaurantUseCase
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.ListRestaurantUseCase
 import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.AdapterRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.ViewHRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogDeleteRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogEditRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogNewRestaurant
@@ -25,8 +26,6 @@ import kotlinx.coroutines.launch
 
 class RestaurantViewModel : ViewModel(), DialogEditRestaurant.EditRestaurantDialogListener {
     var restaurantListLiveData = MutableLiveData<List<Restaurant>>() //repositorio observable.
-    var deleteRestaurantLiveData = MutableLiveData<Restaurant>()
-    var updateRestauranteLiveData = MutableLiveData<Restaurant>()
     var listRestaurants: MutableList<Restaurant> = mutableListOf() // lista de objetos
     var progressBarLiveData = MutableLiveData<Boolean> () //progressbar observable
     var buttonAddRestauran = MutableLiveData<Restaurant>()
@@ -36,89 +35,69 @@ class RestaurantViewModel : ViewModel(), DialogEditRestaurant.EditRestaurantDial
     private  var deleteRestaurantUseCase : DeleteRestaurantUseCase = DeleteRestaurantUseCase()
 
     init {
-        initData()
+        listarRestarurants()
+    }
+    //fun initData() {
+        //listRestaurants = DaoRestaurant.myDao.listRestaurant().toMutableList() //llamamos al singleton.
+      //  adapterRestaurant = AdapterRestaurant()
+    //}
 
-    }
-    fun initData() {
-        listRestaurants = DaoRestaurant.myDao.listRestaurant().toMutableList() //llamamos al singleton.
-    }
+
+    //val v = ViewHRestaurant().setOnClickListener(pos)
 
     fun iniciar(recyclerView: RecyclerView, requireActivity: FragmentActivity) {
         val context = requireActivity
         recyclerView.layoutManager = LinearLayoutManager(requireActivity)
-        recyclerView.adapter = AdapterRestaurant(
-            { pos -> delRestaurant(pos,recyclerView,context) }, { pos -> updateRestaurant(pos,recyclerView,context)})
+
 
     }
-
-    fun delRestaurant(pos: Int,recyclerView : RecyclerView,context: Context){
-        viewModelScope.launch {
-            mostrarDialogoEliminarRestaurante(pos,recyclerView,context)
-            progressBarLiveData.value = true //LiveData notifica del cambio.
-            delay(2000)
-            val data: List<Restaurant> =
-                deleteRestaurantUseCase(1) //Invocamos a nuestro caso de uso (lógica de negocio).
-            listRestaurants = data.toMutableList()
-            data.let {
-                restaurantListLiveData.value = it //LiveData notifica del cambio.
-                progressBarLiveData.value = false //LiveData notifica del cambio.
-            }
-        }
-    }
-
-    fun updateRestaurant(pos:Int,recyclerView:RecyclerView,context:Context){
-        viewModelScope.launch {
-            progressBarLiveData.value = true //LiveData notifica del cambio.
-            delay(2000)
-            val data: List<Restaurant> =
-                deleteRestaurantUseCase(1) //Invocamos a nuestro caso de uso (lógica de negocio).
-            listRestaurants = data.toMutableList()
-            data.let {
-                restaurantListLiveData.value = it //LiveData notifica del cambio.
-                progressBarLiveData.value = false //LiveData notifica del cambio.
-            }
-        }
-    }
-
 
     fun listarRestarurants() {
         viewModelScope.launch {
             progressBarLiveData.value = true //LiveData notifica del cambio.
             delay(2000)
-            val data: List<Restaurant> = listRestaurantUseCase() //Invocamos a nuestro caso de uso (lógica de negocio).
-            listRestaurants = data.toMutableList()
-            data.let {
-                restaurantListLiveData.value = it //LiveData notifica del cambio.
-                progressBarLiveData.value = false //LiveData notifica del cambio.
-            }
+            //listRestaurants = listRestaurantUseCase().toMutableList()
+            restaurantListLiveData.value =
+                listRestaurantUseCase().toMutableList()//Invocamos a nuestro caso de uso (lógica de negocio).
+            progressBarLiveData.value = false //LiveData notifica del cambio.
         }
     }
 
+
     fun addRestaurant(recyclerView: RecyclerView, context: Context) {
+        mostrarDialogoNewRestaurant(recyclerView,context)
+        val restaurant = Restaurant("john","la dorada","Caldas","63232652","hola")
+    }
 
+    fun delRestaurant(pos: Int,recyclerView : RecyclerView,context: Context){
+       mostrarDialogoEliminarRestaurante(pos,recyclerView,context)
+    }
 
+    fun updateRestaurant(pos:Int,recyclerView:RecyclerView,context:Context){
+        mostrarDialogoEditarRestaurante(pos,recyclerView,context)
     }
 
 
 
     // Nueva función para mostrar el diálogo de eliminación
     private fun mostrarDialogoEliminarRestaurante(pos: Int, recyclerView: RecyclerView,context: Context) {
-        val dialog = DialogDeleteRestaurant(pos, listRestaurants[pos].name, this)
+        val restaurantes = deleteRestaurantUseCase(pos)
+        val dialog = DialogDeleteRestaurant(pos, restaurantes[pos].name, this)
         dialog.setDeleteRestaurantDialogListener(object :
             DialogDeleteRestaurant.DeleteRestaurantDialogListener {
             override fun onDialogPositiveClick(pos: Int) {
                 val adapter = recyclerView.adapter  as AdapterRestaurant
-                Toast.makeText(context, "Borrado el Restaurante ${listRestaurants[pos].name}" +
+                Toast.makeText(context, "Borrado el Restaurante ${restaurantes[pos].name}" +
                         " de la posición $pos", Toast.LENGTH_LONG).show()
-                listRestaurants.removeAt(pos)
-                // Notificar al adaptador sobre el cambio
+                restaurantListLiveData.value = restaurantes
+
                 adapter.notifyItemRemoved(pos)
                 adapter.notifyDataSetChanged()
             }
 
             override fun onDialogNegativeClick() {
                 Toast.makeText(context, "Cancelado el borrado de  " +
-                        "${listRestaurants[pos].name} de la posición $pos", Toast.LENGTH_LONG).show()
+                        "${restaurantes[pos].name} de la posición $pos", Toast.LENGTH_LONG).show()
             }
         })
         dialog.show((context as AppCompatActivity).supportFragmentManager, "DialogDeleteRestaurant")
@@ -139,16 +118,9 @@ class RestaurantViewModel : ViewModel(), DialogEditRestaurant.EditRestaurantDial
                 // agregamos un nuevo restaurante
                 val newRestaurant = Restaurant(newName, newCity, newProvince, newPhoneNumber,
                     newImageUrl)
-                listRestaurants.add(newRestaurant)
-
-                // Notificamos al adaptador sobre el cambio
-                val adapter = recyclerView.adapter as AdapterRestaurant
-                adapter.notifyItemInserted(listRestaurants.size - 1)
-
-
+                restaurantListLiveData.value = addRestaurantUseCase(newRestaurant).toMutableList()
                 Toast.makeText(context, "Nuevo restaurante agregado", Toast.LENGTH_LONG).show()
             }
-
             override fun onDialogNegativeClick() {
                 // Acciones después de que el usuario hace clic en "Cancelar"
                 Toast.makeText(context, "Cancelada la creacion de un nuevo Restaurante",
@@ -157,6 +129,48 @@ class RestaurantViewModel : ViewModel(), DialogEditRestaurant.EditRestaurantDial
         })
 
         dialog.show((context as AppCompatActivity).supportFragmentManager, "DialogNewRestaurant")
+    }
+
+    private fun mostrarDialogoEditarRestaurante(pos: Int, recyclerView: RecyclerView,context: Context) {
+        val listRestaurant = editRestaurantUseCase(pos)
+        if (pos in 0 until listRestaurant.size) {
+            val dialog = DialogEditRestaurant(pos, listRestaurant[pos], this)
+            dialog.setEditRestaurantDialogListener(object :
+                DialogEditRestaurant.EditRestaurantDialogListener{
+                override fun onDialogPositiveClick(
+                    pos: Int,
+                    newName: String,
+                    newCity: String,
+                    newProvince: String,
+                    newPhoneNumber: String,
+                    newImageUrl: String
+                ) {
+
+                    // Lógica para guardar la edición del restaurante
+                    val adapter = recyclerView.adapter as AdapterRestaurant
+                    val editedRestaurant = Restaurant(newName, newCity, newProvince,
+                        newPhoneNumber, newImageUrl)
+                    restaurantListLiveData.value = listRestaurant
+                    //listRestaurants[pos] = editedRestaurant
+                    //adapter.notifyItemChanged(pos)
+                    Toast.makeText(context, "Restaurante editado correctamente",
+                        Toast.LENGTH_LONG).show()
+                }
+
+                override fun onDialogNegativeClick() {
+                    // Acciones después de que el usuario hace clic en "Cancelar"
+                    Toast.makeText(context, "Edición del restaurante cancelada",
+                        Toast.LENGTH_LONG).show()
+                }
+
+            })
+
+            dialog.show((context as AppCompatActivity).supportFragmentManager,
+                "DialogEditRestaurant")
+        } else {
+            // Manejar el caso en el que pos no es válido
+            Toast.makeText(context, "Posición no válida", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDialogPositiveClick(

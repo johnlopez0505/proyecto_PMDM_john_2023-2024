@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,55 +13,67 @@ import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentRestaurantesBinding
 import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.AdapterRestaurant
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.MainActivity
 
 class RestaurantesFragment : Fragment() {
     lateinit var binding: FragmentRestaurantesBinding
     lateinit var recyclerView : RecyclerView
     lateinit var adapter: AdapterRestaurant
-    private val restaurantViewModel: RestaurantViewModel by viewModels()
-    //tiene que ser constante.
-
+    private val restaurantViewModel: RestaurantViewModel by viewModels() //tiene que ser constante.
+    private lateinit var contexto : MainActivity
+    var post = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRestaurantesBinding.inflate(layoutInflater,container,false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = AdapterRestaurant( { pos -> delRestaurant(pos) }, { pos -> updateRestaurant(pos)})
         initRecyclerView() //inicializamos el recyclerView. De memento, contendrá lista empty.
         init()
-        registerLiveData()
-        loadDada()
 
     }
 
     private fun initRecyclerView(){
         binding.myRecyclerView.layoutManager = LinearLayoutManager( requireContext())
         recyclerView = binding.myRecyclerView.findViewById(R.id.my_recycler_view)
-    }
-
-    private fun loadDada() {
-        restaurantViewModel.listarRestarurants() //simulamos un evento para iniciar la carga de datos desde el viewmodel
-
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        //binding.myRecyclerView.adapter = adapter
+        recyclerView.adapter = adapter
+        //adapter = AdapterRestaurant()
     }
 
 
     fun init(){
-        restaurantViewModel.iniciar(recyclerView, requireActivity())
+        contexto = requireActivity() as MainActivity
+        //restaurantViewModel.iniciar(recyclerView, requireActivity())
+        registerLiveData()
+    }
+    fun delRestaurant(pos:Int){
+        restaurantViewModel.delRestaurant(pos,recyclerView,contexto)
+        post = pos
+    }
+
+    fun updateRestaurant(pos: Int){
+        restaurantViewModel.updateRestaurant(pos,recyclerView,contexto)
     }
 
     private fun registerLiveData() {
         restaurantViewModel.restaurantListLiveData.observe(requireActivity()) {
             myList ->
-            //Aquí hacemos la actualización del adapter.
-            adapter.restaurantRepository = myList!!.toMutableList() //aseguro los datos.
-            binding.myRecyclerView.adapter = this.adapter //le asigno el adapter.
+            adapter.restaurantRepository = myList!! //aseguro los datos.
             adapter.notifyDataSetChanged()
+            adapter.notifyItemChanged(myList.size -1)
+            adapter.notifyItemRemoved(post)
+            adapter.notifyDataSetChanged()
+            adapter.notifyItemChanged(post)
         }
 
         restaurantViewModel.progressBarLiveData.observe(requireActivity()) {
@@ -73,20 +84,6 @@ class RestaurantesFragment : Fragment() {
 
         binding.fab.setOnClickListener{
             restaurantViewModel.addRestaurant(recyclerView,requireContext())
-        }
-
-        restaurantViewModel.deleteRestaurantLiveData.observe(requireActivity()){
-            restaurant->
-            adapter.restaurantRepository.remove(restaurant)
-            binding.myRecyclerView.adapter = this.adapter
-            adapter.notifyDataSetChanged()
-        }
-
-        restaurantViewModel.updateRestauranteLiveData.observe(requireActivity()){
-            restaurant->
-            adapter.restaurantRepository.add(restaurant)
-            binding.myRecyclerView.adapter = this.adapter
-            adapter.notifyDataSetChanged()
         }
 
 

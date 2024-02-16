@@ -26,25 +26,25 @@ class DaoRestaurant private constructor() : RestauratRepositoryInterfaceDao {
         return RepositoryRestaurant.restaurants
     }
 
-    override fun editRestaurant(pos: Int): Restaurant {
+    override fun editRestaurant(pos: Int): List<Restaurant> {
         val dataSource = service.editRestaurant(pos)
-        mutableRestaurant[pos] = dataSource
+        mutableRestaurant[dataSource]
         RepositoryRestaurant.restaurants = mutableRestaurant
-        return dataSource
+        return RepositoryRestaurant.restaurants
     }
 
-    override fun addRestaurant(restaurant: Restaurant): Restaurant {
+    override fun addRestaurant(restaurant: Restaurant): List<Restaurant> {
         // Agrega el restaurante a la lista y retorna la lista actual
         val dataSource = service.addRestaurant(restaurant)
         mutableRestaurant.add(dataSource)
         RepositoryRestaurant.restaurants = mutableRestaurant
-        return dataSource
+        return RepositoryRestaurant.restaurants
     }
 
     override fun deleteRestaurant(pos: Int): List<Restaurant> {
         // Elimina el restaurante en la posición `pos` y retorna el restaurante eliminado
         val dataSource = service.deleteRestaurant(pos)
-        mutableRestaurant.remove(dataSource)
+        mutableRestaurant.removeAt(dataSource)
         RepositoryRestaurant.restaurants = mutableRestaurant
         return RepositoryRestaurant.restaurants
     }

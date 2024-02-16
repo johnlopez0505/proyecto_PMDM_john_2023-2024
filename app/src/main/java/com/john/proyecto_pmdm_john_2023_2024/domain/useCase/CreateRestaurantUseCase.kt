@@ -6,7 +6,7 @@ import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 class CreateRestaurantUseCase (){
     private val daoRestaurant = DaoRestaurant.myDao
 
-    operator fun invoke(restaurant: Restaurant): Restaurant {
+    operator fun invoke(restaurant: Restaurant): List<Restaurant> {
         return  daoRestaurant.addRestaurant(restaurant)
     }
 }
