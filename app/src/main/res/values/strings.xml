@@ -42,9 +42,11 @@
     <string name="estamos_en_el_fragment_subscription">EStamos en el fragment subscription</string>
     <string name="estamos_en_el_fragmento_library">Estamos en el fragmento library</string>
     <string name="estamos_en_el_fragment_shorts">Estamos en el fragment shorts</string>
-    
+
     <string name="preferencias_fichero_login">PreferenciasAppRestaurante</string>
     <string name="preferencias_email">PreferenciaEmail</string>
     <string name="preferencia_login">isLogin</string>
+    <string name="titulo">Descripcion</string>
+    <string name="descripcion">Descripcion</string>
 
 </resources>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/fondo1"
-    tools:context=".ui.modelView.LoginFragment">
+    tools:context=".ui.modelView.login.LoginFragment">
 
 
     <ImageView

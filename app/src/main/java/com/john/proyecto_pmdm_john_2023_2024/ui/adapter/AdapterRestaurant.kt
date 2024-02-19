@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.RepositoryRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
-import com.john.proyecto_pmdm_john_2023_2024.ui.restaurante.RestaurantViewModel
-import com.john.proyecto_pmdm_john_2023_2024.ui.view.DialogDeleteRestaurant
-import java.lang.reflect.Constructor
 
 class AdapterRestaurant(private var deleteOnClick: (Int) -> Unit,
-                        private var updateOnClick: (Int) -> Unit
+                        private var updateOnClick: (Int) -> Unit,
+                        private var sendInfo:      (Int) -> Unit
 ) : RecyclerView.Adapter<ViewHRestaurant>(){
     var restaurantRepository: List<Restaurant> = RepositoryRestaurant.restaurants//cargo del repsitorio dememoria.
 
@@ -25,7 +23,8 @@ class AdapterRestaurant(private var deleteOnClick: (Int) -> Unit,
         return ViewHRestaurant(
             layoutInflater.inflate(layoutItemRestaurant, parent, false),
             deleteOnClick,
-            updateOnClick
+            updateOnClick,
+            sendInfo
 
         )
 
@@ -37,7 +36,7 @@ class AdapterRestaurant(private var deleteOnClick: (Int) -> Unit,
     */
     override fun onBindViewHolder(holder: ViewHRestaurant, position: Int) {
         holder.renderize(restaurantRepository[position]) //renderizamos la view.
-        //holder.setOnClickListener(position)
+
 
 
     }

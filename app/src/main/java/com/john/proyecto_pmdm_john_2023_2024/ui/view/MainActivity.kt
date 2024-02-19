@@ -27,8 +27,10 @@ import com.google.android.material.navigation.NavigationView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityMainBinding
 import com.john.proyecto_pmdm_john_2023_2024.databinding.NavHeaderMainBinding
-import com.john.proyecto_pmdm_john_2023_2024.ui.restaurante.RestaurantViewModel
+import com.john.proyecto_pmdm_john_2023_2024.ui.modelView.restaurante.RestaurantViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var binding: ActivityMainBinding
@@ -69,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
 
 
-
         login()
         initFab()
         navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -87,15 +88,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        initRecyclerView()
-        //resytauranViewModel = RestaurantViewModel( this) //Creamos el controler
-        //controller.setAdapter(recicle)
-        //controller.loggOut() //muestro el log en pantalla
 
     }
-    private fun initRecyclerView() {
-        //binding.myRecyclerView.layoutManager = LinearLayoutManager( this)
-    }
+
     @SuppressLint("ResourceType")
     private fun login() {
         // Uso de ViewBinding para acceder a las vistas en el encabezado de navegación

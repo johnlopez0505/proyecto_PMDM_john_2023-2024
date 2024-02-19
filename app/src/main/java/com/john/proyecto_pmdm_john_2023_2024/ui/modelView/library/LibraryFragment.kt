@@ -1,21 +1,20 @@
-package com.john.proyecto_pmdm_john_2023_2024.ui.modelView
+package com.john.proyecto_pmdm_john_2023_2024.ui.modelView.library
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.john.proyecto_pmdm_john_2023_2024.R
-import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentSettingsBinding
+import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentLibraryBinding
 
-class SettingsFragment : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
+class LibraryFragment : Fragment() {
+    private lateinit var binding: FragmentLibraryBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSettingsBinding.inflate(layoutInflater,container,false)
+        binding = FragmentLibraryBinding.inflate(layoutInflater,container,false)
         return binding.root
     }
 

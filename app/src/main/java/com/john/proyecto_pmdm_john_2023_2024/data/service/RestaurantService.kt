@@ -3,13 +3,9 @@ package com.john.proyecto_pmdm_john_2023_2024.data.service
 import com.john.proyecto_pmdm_john_2023_2024.data.dataSource.Restaurants
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.RepositoryRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import javax.inject.Inject
 
-class RestaurantService : RestaurantServiceInterface {
-    companion object {
-        val restaurantService: RestaurantService by lazy{ //lazy delega a un primer acceso
-            RestaurantService() //Me creo sólo este objeto una vez.
-        }
-    }
+class RestaurantService @Inject constructor() : RestaurantServiceInterface {
 
     override fun listRestaurant(): List<Restaurant> {
         return Restaurants.listRestauran
@@ -24,7 +20,6 @@ class RestaurantService : RestaurantServiceInterface {
     }
 
     override fun deleteRestaurant(pos: Int): Int {
-        // Elimina el restaurante en la posición especificada
         return pos
     }
 }

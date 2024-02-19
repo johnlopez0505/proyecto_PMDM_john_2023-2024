@@ -7,7 +7,7 @@ import com.john.proyecto_pmdm_john_2023_2024.databinding.ItemRestaurantBinding
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 
 class ViewHRestaurant (view: View,  var deleteOnClick:
-    (Int) -> Unit, var updateOnClick: (Int) -> Unit
+    (Int) -> Unit, var updateOnClick: (Int) -> Unit, var sendInfo: (Int) -> Unit
 ):RecyclerView.ViewHolder (view){
 
     private lateinit var binding: ItemRestaurantBinding
@@ -16,10 +16,10 @@ class ViewHRestaurant (view: View,  var deleteOnClick:
     }
     //método que se encarga de mapear los item por propiedad del modelo.
     fun renderize(hotel : Restaurant){
-        binding.txtviewName.setText(hotel. name)
-        binding.txtviewCity.setText(hotel. city)
-        binding.txtviewProvince.setText(hotel. province)
-        binding.txtviewPhone.setText(hotel. phone)
+        binding.txtviewName.text = hotel. name
+        binding.txtviewCity.text = hotel. city
+        binding.txtviewProvince.text = hotel. province
+        binding.txtviewPhone.text = hotel. phone
         Glide
             .with( itemView.context)
             .load(hotel. image)
@@ -28,7 +28,7 @@ class ViewHRestaurant (view: View,  var deleteOnClick:
 
         setOnClickListener(adapterPosition)
     }
-    fun setOnClickListener(position : Int) {
+    private fun setOnClickListener(position : Int) {
         binding.btnDelete.setOnClickListener{
             deleteOnClick(position)
         }
@@ -36,8 +36,8 @@ class ViewHRestaurant (view: View,  var deleteOnClick:
         binding.btnEdit.setOnClickListener{
             updateOnClick(position)
         }
-
+        binding.btnDescripcion.setOnClickListener{
+            sendInfo(position)
+        }
     }
-
-
 }

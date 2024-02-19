@@ -1,5 +1,6 @@
 package com.john.proyecto_pmdm_john_2023_2024
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -115,6 +116,7 @@ class Login : AppCompatActivity() {
         return shared.getBoolean(getString(R.string.preferencia_login),false)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun startMainActivity() {
         loadLastUser()
         val email = shared.getString(getString(R.string.preferencias_email), "")
@@ -136,7 +138,6 @@ class Login : AppCompatActivity() {
         // Guardar el correo electrónico del usuario
         editor.putString(getString(R.string.preferencias_email), userEmail)
         // Aplicar los cambios
-        editor.commit()
         editor.apply()
     }
 

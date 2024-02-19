@@ -1,4 +1,4 @@
-package com.john.proyecto_pmdm_john_2023_2024.ui.modelView
+package com.john.proyecto_pmdm_john_2023_2024.ui.modelView.principal
 
 import android.os.Bundle
 import android.view.LayoutInflater
