@@ -12,9 +12,9 @@ class DaoUser private constructor(): DaoUserInterface {
     }
     //Método que accede a la BBDD y devuelve todos los datos
 
-    override fun getDataUser(): List<User> = Users.listUser
+    override fun getDataUser(): List<Usuarios> = Users.listUser
 
-    fun addUser(user: User) {
+    fun addUser(user: Usuarios) {
         Users.listUser.add(user)
     }
 }

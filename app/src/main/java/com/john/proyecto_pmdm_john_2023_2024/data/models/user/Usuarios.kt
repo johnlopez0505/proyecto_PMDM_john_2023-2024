@@ -1,6 +1,6 @@
 package com.john.proyecto_pmdm_john_2023_2024.data.models.user
 
-class User (
+class Usuarios (
     var name: String,
     var email: String,
     var password: String

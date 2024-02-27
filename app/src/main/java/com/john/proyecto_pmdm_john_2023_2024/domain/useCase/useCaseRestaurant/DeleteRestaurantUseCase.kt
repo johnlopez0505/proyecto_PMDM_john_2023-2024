@@ -1,4 +1,4 @@
-package com.john.proyecto_pmdm_john_2023_2024.domain.useCase
+package com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant
 
 import android.content.ContentValues.TAG
 import android.util.Log

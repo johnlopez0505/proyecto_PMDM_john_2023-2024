@@ -1,4 +1,4 @@
-package com.john.proyecto_pmdm_john_2023_2024.ui.view
+package com.john.proyecto_pmdm_john_2023_2024.ui.view.dialog
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
-import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.CreateRestaurantUseCase
+import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant.CreateRestaurantUseCase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

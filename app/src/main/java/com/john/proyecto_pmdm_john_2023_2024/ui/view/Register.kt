@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.john.proyecto_pmdm_john_2023_2024.Login
 import com.john.proyecto_pmdm_john_2023_2024.data.models.user.DaoUser
-import com.john.proyecto_pmdm_john_2023_2024.data.models.user.User
+import com.john.proyecto_pmdm_john_2023_2024.data.models.user.Usuarios
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityRegisterBinding
 
 class Register : AppCompatActivity() {
@@ -56,7 +56,7 @@ class Register : AppCompatActivity() {
 
         if (password == confirmPassword) {
             // Contraseña y confirmación coinciden, realiza el registro
-            DaoUser.myDao.addUser(User(name, email, password))
+            DaoUser.myDao.addUser(Usuarios(name, email, password))
             Toast.makeText(
                 this, "Usuario creado correctamente",
                 Toast.LENGTH_SHORT
