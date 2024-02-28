@@ -32,13 +32,4 @@ object RetrofitModule {
         retrofit
             .create(UserApiServiceInterface::class.java)
 
-
-    /*
-    @Singleton
-    @Provides
-    fun provideServiceApi(retrofit : Retrofit): DogApiServiceInterface =
-        retrofit
-        .create(DogApiServiceInterface::class.java)
-
- */
 }

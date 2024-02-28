@@ -1,30 +1,56 @@
-package com.john.proyecto_pmdm_john_2023_2024.ui.view
+package com.john.proyecto_pmdm_john_2023_2024.ui.view.register
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.john.proyecto_pmdm_john_2023_2024.Login
+import androidx.activity.viewModels
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.login.Login
 import com.john.proyecto_pmdm_john_2023_2024.data.models.user.DaoUser
 import com.john.proyecto_pmdm_john_2023_2024.data.models.user.Usuarios
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityRegisterBinding
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.User
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Register : AppCompatActivity() {
     private lateinit var bindingRegister : ActivityRegisterBinding
+    private val registerViewModel : RegisterViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingRegister = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(bindingRegister.root)
 
         initEvents()
+        registerLiveData()
+        //comprobarEstado()
+
     }
 
     private fun initEvents() {
         bindingRegister.buttonSignUp.setOnClickListener{
-            comprobarEstado()
+           registerViewModel.isRegister(
+               bindingRegister.editTextUsername.text.toString(),
+               bindingRegister.editTextEmail.text.toString(),
+               bindingRegister.editTextPassword.text.toString())
         }
         bindingRegister.buttonRegresarLogin.setOnClickListener{
             regresarLogin()
+        }
+
+    }
+
+    private fun registerLiveData() {
+        registerViewModel.registerLiveData.observe(this){
+            register ->
+            if(register != null){
+
+            }else{
+            Toast.makeText(
+                this, "Credenciales no validas",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         }
 
     }

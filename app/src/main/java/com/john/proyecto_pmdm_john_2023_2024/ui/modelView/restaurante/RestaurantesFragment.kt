@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -20,7 +19,7 @@ import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentRestaurantesBinding
 import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.AdapterRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.ui.view.MainActivity
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

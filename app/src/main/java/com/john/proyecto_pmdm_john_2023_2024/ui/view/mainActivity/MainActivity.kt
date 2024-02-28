@@ -1,10 +1,12 @@
-package com.john.proyecto_pmdm_john_2023_2024.ui.view
+package com.john.proyecto_pmdm_john_2023_2024.ui.view.mainActivity
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -23,6 +25,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityMainBinding
@@ -102,14 +105,25 @@ class MainActivity : AppCompatActivity() {
 
         val name1 = intent.getStringExtra("name")
         val email1 = intent.getStringExtra("email")
+        val image = intent.getStringExtra("image")
+        Log.i(TAG, "login imagen del servidor: $image")
 
-        if (name1 != null || email1 != null || imagen != null) {
+        if (name1 != null || email1 != null) {
             name.text = name1
             email.text = email1
-            imagen.setImageResource(R.mipmap.logo1_round)
-        }
 
+        }
+        if(image == null){
+            imagen.setImageResource(R.mipmap.logo1_round)
+        }else{
+            Glide
+                .with(this)
+                .load(image)
+                .centerCrop()
+                .into( navHeaderBinding.imageViewHeader)
+        }
     }
+
     private fun initFab(){
         binding.appBarMain.appBottomBar.fab.setOnClickListener{
             showBottomDialog()

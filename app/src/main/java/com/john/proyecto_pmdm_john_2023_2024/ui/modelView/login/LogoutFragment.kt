@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.john.proyecto_pmdm_john_2023_2024.Login
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.login.Login
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentLogoutBinding
 

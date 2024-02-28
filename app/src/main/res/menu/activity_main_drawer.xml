@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/baseline_home_24"
-            android:title="Home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_principal"
             android:icon="@drawable/baseline_comment_24"
@@ -25,15 +25,10 @@
     <item android:title="">
         <menu>
             <item android:title="" />
-            <item android:title="" />
-            <item android:title="" />
-            <item android:title="" />
-
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/baseline_logout_24"
                 android:title="@string/logout"/>
-
         </menu>
     </item>
 

@@ -1,4 +1,4 @@
-package com.john.proyecto_pmdm_john_2023_2024
+package com.john.proyecto_pmdm_john_2023_2024.ui.view.login
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
@@ -9,12 +9,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.john.proyecto_pmdm_john_2023_2024.data.models.user.DaoUser
+import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityLoginBinding
 import com.john.proyecto_pmdm_john_2023_2024.domain.model.User
-import com.john.proyecto_pmdm_john_2023_2024.ui.view.MainActivity
-import com.john.proyecto_pmdm_john_2023_2024.ui.view.Register
-import com.john.proyecto_pmdm_john_2023_2024.ui.view.login.LoginViewModel
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.mainActivity.MainActivity
+import com.john.proyecto_pmdm_john_2023_2024.ui.view.register.Register
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,7 +42,7 @@ class Login : AppCompatActivity() {
                 validarCredenciales(login)
             }else{
                 Toast.makeText(
-                    this, "Error en el servidor $login",
+                    this, "Credenciales no validas",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -53,8 +52,8 @@ class Login : AppCompatActivity() {
 
     private fun initEvents() {
         bindingLogin.buttonLogin.setOnClickListener {
-            loginViewModel.isLogin("srodher115@g.educaand.es",
-                "santi")
+            loginViewModel.isLogin(bindingLogin.email.text.toString(),
+                bindingLogin.password.text.toString())
             Log.i(TAG, "initEvents: ${bindingLogin.email}")
         }
 
@@ -78,20 +77,22 @@ class Login : AppCompatActivity() {
     }
 
     private fun validarCredenciales(login: User) {
-        val user = bindingLogin.email.text.toString()
+        val user = login.name
         val password = bindingLogin.password.text.toString()
         val email = login.email
         // Guardar el último usuario ingresado
-        guardarUltimoUsuario(user, password, email)
+        guardarUltimoUsuario(email!!, password, login.name!!)
         // El usuario ha iniciado sesión con éxito
         //guardamos las preferencias
-        saveLoginState(email)
+        saveLoginState(user!!)
         // Credenciales válidas, iniciar Activity principal
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("name", user)
+        intent.putExtra("name", login.name)
         intent.putExtra("email", email)
+        intent.putExtra("image", login.imagen)
         startActivity(intent)
     }
+
     private fun registerUser() {
         val  intent = Intent(this, Register::class.java)
         startActivity(intent)
@@ -140,8 +141,8 @@ class Login : AppCompatActivity() {
         val email = shared.getString(getString(R.string.preferencias_email), "")
         // Iniciar la actividad principal
         val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("name",user)
-            intent.putExtra("email",email)
+            intent.putExtra("name",email)
+            intent.putExtra("email",user)
         startActivity(intent)
 
         // Finalizar esta actividad para que no vuelva atrás con el botón de retroceso

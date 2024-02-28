@@ -28,6 +28,7 @@ class LoginViewModel @Inject constructor(
             Log.i(TAG, "isLogin usuario creado: $user")
             useCaseLogin.setUser(user)
             val usuario : User? = useCaseLogin()
+            Log.i(TAG, "isLogin usuario devuelto del api: $usuario")
             usuario.let { loginLiveData.value = it
             }
         }
