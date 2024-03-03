@@ -17,6 +17,7 @@ class UserRepository @Inject constructor(
         val userRequest = RequestLoginUser(user.email!!, user.password!!)
         Log.i(TAG, "getUser userRequest: $userRequest")
         val result = apiService.getUser(userRequest)
+        Log.i(TAG, "getUser respuesta de apiserver.getUser: $result ")
         result
             .onSuccess {
                 responseUser->

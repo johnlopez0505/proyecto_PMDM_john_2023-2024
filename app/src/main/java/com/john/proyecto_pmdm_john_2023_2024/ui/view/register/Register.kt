@@ -23,16 +23,11 @@ class Register : AppCompatActivity() {
 
         initEvents()
         registerLiveData()
-        //comprobarEstado()
-
     }
 
     private fun initEvents() {
         bindingRegister.buttonSignUp.setOnClickListener{
-           registerViewModel.isRegister(
-               bindingRegister.editTextUsername.text.toString(),
-               bindingRegister.editTextEmail.text.toString(),
-               bindingRegister.editTextPassword.text.toString())
+            comprobarEstado()
         }
         bindingRegister.buttonRegresarLogin.setOnClickListener{
             regresarLogin()
@@ -54,7 +49,6 @@ class Register : AppCompatActivity() {
         }
 
     }
-
 
     private fun comprobarEstado() {
         val name = bindingRegister.editTextUsername.text.toString().trim()
@@ -82,7 +76,10 @@ class Register : AppCompatActivity() {
 
         if (password == confirmPassword) {
             // Contraseña y confirmación coinciden, realiza el registro
-            DaoUser.myDao.addUser(Usuarios(name, email, password))
+            registerViewModel.isRegister(
+                bindingRegister.editTextUsername.text.toString(),
+                bindingRegister.editTextEmail.text.toString(),
+                bindingRegister.editTextPassword.text.toString())
             Toast.makeText(
                 this, "Usuario creado correctamente",
                 Toast.LENGTH_SHORT
@@ -105,5 +102,4 @@ class Register : AppCompatActivity() {
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
     }
-
 }

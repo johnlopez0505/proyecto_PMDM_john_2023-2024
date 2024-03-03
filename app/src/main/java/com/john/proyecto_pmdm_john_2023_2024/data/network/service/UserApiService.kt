@@ -20,7 +20,7 @@ class UserApiService @Inject constructor(
         try{
             Log.i(TAG, "getUser en user api: $user")
             val response : Response<ResponseLogin> = apiService.login(user)
-            Log.i(TAG, "getUser respuesta del servidor : ${response.body()} ")
+            Log.i(TAG, "getUser respuesta del servidor : ${response.raw()} ")
             if (response.isSuccessful){
                 response.body()?.let{
                     retUser->
@@ -39,8 +39,6 @@ class UserApiService @Inject constructor(
         withContext(Dispatchers.IO){
             try {
                 val response : Response<ResponseRegister> = apiService.register(user)
-                val data = apiService.register(user)
-                Log.i(TAG, "getRegisterUser de la data : ${data.body()}")
                 Log.i(TAG, "geRegisterUser respuesta del servidor : ${response.body()} ")
                 if (response.isSuccessful){
                     response.body()?.let{

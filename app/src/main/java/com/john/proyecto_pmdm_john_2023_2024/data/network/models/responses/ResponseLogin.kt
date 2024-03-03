@@ -36,6 +36,10 @@ data class ResponseLogin (
 
     @SerializedName("imagen")
     @Expose
-    val image : String
+    val image : String,
+
+    @SerializedName("details")
+    @Expose
+    val details : String?
     ){
 }
