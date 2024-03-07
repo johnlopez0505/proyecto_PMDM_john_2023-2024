@@ -113,9 +113,9 @@ class MainActivity : AppCompatActivity() {
             email.text = email1
 
         }
-        imagen.setImageResource(R.mipmap.logo1_round)
+        //imagen.setImageResource(R.mipmap.logo1_round)
 
-        /* if(image === null){
+        if(image == null){
             imagen.setImageResource(R.mipmap.logo1_round)
         }else{
             Glide
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                 .load(image)
                 .centerCrop()
                 .into( navHeaderBinding.imageViewHeader)
-        } */
+        }
     }
 
     private fun initFab(){
