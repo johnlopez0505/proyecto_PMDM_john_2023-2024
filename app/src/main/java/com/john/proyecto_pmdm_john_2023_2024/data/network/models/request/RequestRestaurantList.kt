@@ -1,0 +1,10 @@
+package com.john.proyecto_pmdm_john_2023_2024.data.network.models.request
+
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
+data class RequestRestaurantList(
+    @SerializedName("token")
+    @Expose
+    val token : String,
+)
