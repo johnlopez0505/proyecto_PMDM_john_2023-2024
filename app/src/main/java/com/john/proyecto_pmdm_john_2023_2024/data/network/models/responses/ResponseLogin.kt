@@ -32,7 +32,7 @@ data class ResponseLogin (
 
     @SerializedName("disponible")
     @Expose
-    val disponible : Int,
+    val disponible : String,
 
     @SerializedName("imagen")
     @Expose

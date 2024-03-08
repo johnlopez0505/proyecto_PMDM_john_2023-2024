@@ -11,7 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityLoginBinding
-import com.john.proyecto_pmdm_john_2023_2024.domain.model.User
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.user.User
 import com.john.proyecto_pmdm_john_2023_2024.ui.view.mainActivity.MainActivity
 import com.john.proyecto_pmdm_john_2023_2024.ui.view.register.Register
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,10 +81,10 @@ class Login : AppCompatActivity() {
         val password = bindingLogin.password.text.toString()
         val email = login.email
         // Guardar el último usuario ingresado
-        guardarUltimoUsuario(email!!, password, login.name!!)
+        guardarUltimoUsuario(email!!, password, login.name!!,login.imagen)
         // El usuario ha iniciado sesión con éxito
         //guardamos las preferencias
-        saveLoginState(user!!)
+        saveLoginState(user!!,login.imagen)
         // Credenciales válidas, iniciar Activity principal
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("name", login.name)
@@ -108,12 +108,18 @@ class Login : AppCompatActivity() {
 
     }
 
-    private fun guardarUltimoUsuario(username: String, password: String,email: String) {
+    private fun guardarUltimoUsuario(
+        username: String,
+        password: String,
+        email: String,
+        imagen: String?
+    ) {
         val preferences = getPreferences(MODE_PRIVATE)
         val editor = preferences.edit()
         editor.putString("lastUsername", username)
         editor.putString("lastPassword", password)
         editor.putString("email",email)
+        editor.putString("image",imagen)
         editor.apply()
     }
     private fun loadLastUser(){
@@ -138,24 +144,28 @@ class Login : AppCompatActivity() {
     @SuppressLint("SuspiciousIndentation")
     private fun startMainActivity() {
         loadLastUser()
+        val imagen = shared.getString(getString(R.string.preferencia_imagen),"")
         val email = shared.getString(getString(R.string.preferencias_email), "")
         // Iniciar la actividad principal
         val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("name",email)
             intent.putExtra("email",user)
+            intent.putExtra("image",imagen)
         startActivity(intent)
 
         // Finalizar esta actividad para que no vuelva atrás con el botón de retroceso
         finish()
     }
 
-    private fun saveLoginState(userEmail: String) {
+    private fun saveLoginState(userEmail: String, imagen: String?) {
         // Obtener un editor de SharedPreferences
         val editor = shared.edit()
         // Guardar el estado de inicio de sesión como verdadero
         editor.putBoolean(getString(R.string.preferencia_login), true)
         // Guardar el correo electrónico del usuario
         editor.putString(getString(R.string.preferencias_email), userEmail)
+        //Guardamos la imagen del usuario
+        editor.putString(getString(R.string.preferencia_imagen),imagen)
         // Aplicar los cambios
         editor.apply()
     }

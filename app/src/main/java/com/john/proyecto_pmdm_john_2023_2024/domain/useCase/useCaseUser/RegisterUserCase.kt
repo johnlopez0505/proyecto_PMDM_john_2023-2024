@@ -2,7 +2,7 @@ package com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseUser
 
 import android.content.ContentValues
 import android.util.Log
-import com.john.proyecto_pmdm_john_2023_2024.domain.model.RegisterUser
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.user.RegisterUser
 import com.john.proyecto_pmdm_john_2023_2024.domain.model.UserRepository
 import javax.inject.Inject
 

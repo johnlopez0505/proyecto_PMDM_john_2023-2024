@@ -1,12 +1,9 @@
 package com.john.proyecto_pmdm_john_2023_2024.ui.view.register
 
-import android.content.ContentValues
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.john.proyecto_pmdm_john_2023_2024.domain.model.RegisterUser
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.user.RegisterUser
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseUser.RegisterUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

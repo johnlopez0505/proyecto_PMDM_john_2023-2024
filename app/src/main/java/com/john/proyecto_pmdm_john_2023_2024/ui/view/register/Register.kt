@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.john.proyecto_pmdm_john_2023_2024.ui.view.login.Login
-import com.john.proyecto_pmdm_john_2023_2024.data.models.user.DaoUser
-import com.john.proyecto_pmdm_john_2023_2024.data.models.user.Usuarios
 import com.john.proyecto_pmdm_john_2023_2024.databinding.ActivityRegisterBinding
-import com.john.proyecto_pmdm_john_2023_2024.domain.model.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

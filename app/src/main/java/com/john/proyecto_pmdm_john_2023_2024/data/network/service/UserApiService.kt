@@ -4,8 +4,10 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestLoginUser
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestRegisterUser
+import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestRestaurantList
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.responses.ResponseLogin
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.responses.ResponseRegister
+import com.john.proyecto_pmdm_john_2023_2024.data.network.models.responses.ResponseRestaurant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -53,4 +55,6 @@ class UserApiService @Inject constructor(
                 return@withContext Result.failure(e)
             }
     }
+
+
 }

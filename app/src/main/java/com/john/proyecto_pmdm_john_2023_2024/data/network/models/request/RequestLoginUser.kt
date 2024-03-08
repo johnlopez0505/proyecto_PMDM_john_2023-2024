@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
 
 data class RequestLoginUser(
 
-
     @SerializedName("email")
     @Expose
     val email : String,

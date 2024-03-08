@@ -5,10 +5,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.john.proyecto_pmdm_john_2023_2024.domain.model.User
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.user.User
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseUser.LoginUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.internal.Provider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

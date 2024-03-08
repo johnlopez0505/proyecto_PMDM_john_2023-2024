@@ -4,7 +4,8 @@ import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.DaoRestauran
 import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 import javax.inject.Inject
 
-class CreateRestaurantUseCase @Inject constructor(private val daoRestaurant : DaoRestaurant){
+class CreateRestaurantUseCase @Inject constructor(
+    private val daoRestaurant : DaoRestaurant){
 
     private var restaurant: Restaurant? = null
 
