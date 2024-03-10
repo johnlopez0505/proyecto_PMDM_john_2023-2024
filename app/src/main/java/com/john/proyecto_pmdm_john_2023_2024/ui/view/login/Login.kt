@@ -23,6 +23,7 @@ class Login : AppCompatActivity() {
     private lateinit var shared : SharedPreferences
     private lateinit var user: String
     private lateinit var email: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingLogin = ActivityLoginBinding.inflate(layoutInflater)
@@ -84,7 +85,7 @@ class Login : AppCompatActivity() {
         guardarUltimoUsuario(email!!, password, login.name!!,login.imagen)
         // El usuario ha iniciado sesión con éxito
         //guardamos las preferencias
-        saveLoginState(user!!,login.imagen)
+        saveLoginState(user!!,login.imagen,login.token,login.id)
         // Credenciales válidas, iniciar Activity principal
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("name", login.name)
@@ -146,6 +147,7 @@ class Login : AppCompatActivity() {
         loadLastUser()
         val imagen = shared.getString(getString(R.string.preferencia_imagen),"")
         val email = shared.getString(getString(R.string.preferencias_email), "")
+        val token = shared.getString(getString(R.string.token),"")
         // Iniciar la actividad principal
         val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("name",email)
@@ -157,7 +159,7 @@ class Login : AppCompatActivity() {
         finish()
     }
 
-    private fun saveLoginState(userEmail: String, imagen: String?) {
+    private fun saveLoginState(userEmail: String, imagen: String?, token: String?, id: Int) {
         // Obtener un editor de SharedPreferences
         val editor = shared.edit()
         // Guardar el estado de inicio de sesión como verdadero
@@ -166,6 +168,9 @@ class Login : AppCompatActivity() {
         editor.putString(getString(R.string.preferencias_email), userEmail)
         //Guardamos la imagen del usuario
         editor.putString(getString(R.string.preferencia_imagen),imagen)
+        //Guardamos el token
+        editor.putString("token",token)
+        editor.putString("id", id.toString())
         // Aplicar los cambios
         editor.apply()
     }

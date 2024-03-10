@@ -2,6 +2,7 @@ package com.john.proyecto_pmdm_john_2023_2024.ui.modelView.restaurante
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -16,8 +18,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentRestaurantesBinding
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.AdapterRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.ui.view.mainActivity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +33,7 @@ class RestaurantesFragment : Fragment() {
     private lateinit var adapter: AdapterRestaurant
     private val restaurantViewModel: RestaurantViewModel by viewModels() //tiene que ser constante.
     private lateinit var contexto : MainActivity
+    private lateinit var shared : SharedPreferences
     private var post = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +51,13 @@ class RestaurantesFragment : Fragment() {
             { pos -> updateRestaurant(pos)},{pos ->sendInfoRestaurant(pos)})
         initRecyclerView() //inicializamos el recyclerView. De memento, contendrá lista empty.
         init()
+        restaurantViewModel.listarRestarurants()
 
+    }
+
+    private fun cargarPreferenciasCompartidas() {
+        val fichePreferencias : String = getString(R.string.preferencias_fichero_login)
+        shared = contexto.getSharedPreferences(fichePreferencias, AppCompatActivity.MODE_PRIVATE)
     }
 
     private fun initRecyclerView(){
@@ -56,21 +65,27 @@ class RestaurantesFragment : Fragment() {
         recyclerView = binding.myRecyclerView.findViewById(R.id.my_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
+
     }
 
 
     private fun init(){
         contexto = requireActivity() as MainActivity
+        cargarPreferenciasCompartidas()
         registerLiveData()
-        restaurantViewModel.iniciar(adapter)
+        val token = shared.getString(getString(R.string.token),"")
+        restaurantViewModel.iniciar(adapter,token)
     }
     private fun delRestaurant(pos:Int){
-        restaurantViewModel.delRestaurant(pos,recyclerView,contexto)
+        val token = shared.getString(getString(R.string.token),"")
+        restaurantViewModel.delRestaurant(pos,recyclerView,contexto,token)
         post = pos
     }
 
     private fun updateRestaurant(pos: Int){
-        restaurantViewModel.updateRestaurant(pos,recyclerView,contexto)
+        val token = shared.getString(getString(R.string.token),"")
+        val id = shared.getString("id","")
+        restaurantViewModel.updateRestaurant(pos,recyclerView,contexto,token,id)
         post = pos
     }
 
@@ -95,7 +110,10 @@ class RestaurantesFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener{
-            restaurantViewModel.addRestaurant(recyclerView,requireActivity())
+            val token = shared.getString(getString(R.string.token),"")
+            val id = shared.getString("id","")
+            Log.i(TAG, "id usuario  : $id")
+            restaurantViewModel.addRestaurant(recyclerView,requireActivity(),token,id)
         }
     }
 
@@ -118,7 +136,7 @@ class RestaurantesFragment : Fragment() {
             )
         }
         Toast.makeText(
-            context, "Este es el restaurante ${listRestaurants[pos].name}" +
+            context, "Este es el restaurante ${listRestaurants[pos].nombre}" +
                     " de la posición $pos", Toast.LENGTH_LONG
         ).show()
     }

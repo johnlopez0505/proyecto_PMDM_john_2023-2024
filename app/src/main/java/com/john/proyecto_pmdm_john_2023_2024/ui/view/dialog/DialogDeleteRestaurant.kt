@@ -7,15 +7,18 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant.DeleteRestaurantUseCase
 import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.AdapterRestaurant
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DialogDeleteRestaurant(
@@ -59,28 +62,36 @@ class DialogDeleteRestaurant(
         recyclerView: RecyclerView,
         context: Context,
         deleteRestaurantUseCase: DeleteRestaurantUseCase,
-        restaurantListLiveData: MutableLiveData<List<Restaurant>>
+        restaurantListLiveData: MutableLiveData<List<Restaurant>>,
+        token: String?
     ) {
 
         val adapter = recyclerView.adapter  as AdapterRestaurant
         var listarest = adapter.restaurantRepository
         if(pos in listarest.indices) {
-            val dialog = DialogDeleteRestaurant(pos, listarest[pos].name)
+            val dialog = DialogDeleteRestaurant(pos, listarest[pos].nombre)
             dialog.setDeleteRestaurantDialogListener(object :
                 DeleteRestaurantDialogListener {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onDialogPositiveClick(pos: Int) {
-                    Toast.makeText(
-                        context, "Borrado el Restaurante ${listarest[pos].name}" +
-                                " de la posición $pos", Toast.LENGTH_LONG
-                    ).show()
-                    deleteRestaurantUseCase.setPosition(pos)
-                    restaurantListLiveData.value = deleteRestaurantUseCase()
+
+                    Toast.makeText(context, "id del restaurante  " +
+                            "${listarest[pos].id} ", Toast.LENGTH_LONG).show()
+
+                    lifecycleScope.launch {
+                        deleteRestaurantUseCase.invoke(15.toInt(),token)
+                        Toast.makeText(
+                            context, "Borrado el Restaurante ${listarest[pos].nombre}" +
+                                    " de la posición $pos", Toast.LENGTH_LONG
+                        ).show()
+                        //restaurantListLiveData.value = deleteRestaurantUseCase()
+
+                    }
                 }
 
                 override fun onDialogNegativeClick() {
                     Toast.makeText(context, "Cancelado el borrado de  " +
-                            "${listarest[pos].name} de la posición $pos", Toast.LENGTH_LONG).show()
+                            "${listarest[pos].nombre} de la posición $pos", Toast.LENGTH_LONG).show()
                 }
             })
             dialog.show((context as AppCompatActivity).supportFragmentManager, "DialogDeleteRestaurant")

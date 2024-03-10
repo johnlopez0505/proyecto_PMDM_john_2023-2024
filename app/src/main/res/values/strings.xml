@@ -47,6 +47,8 @@
     <string name="preferencias_email">PreferenciaEmail</string>
     <string name="preferencia_login">isLogin</string>
     <string name="preferencia_imagen">imagen</string>
+    <string name="token">token</string>
+    <string name="id">id</string>
     <string name="titulo">Descripcion</string>
     <string name="descripcion">Descripcion</string>
     <string name="contrase_a">Contraseña</string>

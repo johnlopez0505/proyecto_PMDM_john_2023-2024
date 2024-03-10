@@ -2,6 +2,7 @@ package com.john.proyecto_pmdm_john_2023_2024.framework
 
 
 import com.john.proyecto_pmdm_john_2023_2024.data.network.service.UserApiServiceInterface
+import com.john.proyecto_pmdm_john_2023_2024.data.network.service.restaurant.RestaurantApiServiceInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +30,11 @@ object RetrofitModule {
     fun provideServiceApi(retrofit: Retrofit): UserApiServiceInterface =
         retrofit
             .create(UserApiServiceInterface::class.java)
+
+    @Singleton
+    @Provides
+    fun provideServiceApiRestaurant(retrofit: Retrofit): RestaurantApiServiceInterface =
+        retrofit
+            .create(RestaurantApiServiceInterface::class.java)
 
 }

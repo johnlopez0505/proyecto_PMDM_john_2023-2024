@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant.CreateRestaurantUseCase
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant.DeleteRestaurantUseCase
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant.EditRestaurantUseCase
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RestaurantViewModel @Inject constructor(
     private val listRestaurantUseCase: ListRestaurantUseCase,
-    private var editRestaurantUseCase: EditRestaurantUseCase,
+    private var editRestaurantUseCase:  EditRestaurantUseCase,
     private var addRestaurantUseCase: CreateRestaurantUseCase,
     private var deleteRestaurantUseCase: DeleteRestaurantUseCase
     ): ViewModel() {
@@ -34,30 +34,31 @@ class RestaurantViewModel @Inject constructor(
     var restaurantListLiveData = MutableLiveData<List<Restaurant>>() //repositorio observable.
     private var listRestaurantes: MutableList<Restaurant> = mutableListOf() // lista de objetos
     var progressBarLiveData = MutableLiveData<Boolean>() //progressbar observable
+    private  var tokenUser: String? = null
 
     init {
         listarRestarurants()
     }
 
-    fun iniciar(adapterRestaurant: AdapterRestaurant) {
+    fun iniciar(adapterRestaurant: AdapterRestaurant, token: String?) {
+        Log.i(TAG, "iniciar este es el token en iniciar: $token")
+        if (token != null) {
+            tokenUser = token
+            Log.i(TAG, "iniciar este es el token en iniciar: $token")
+        }
         listRestaurantes = adapterRestaurant.restaurantRepository.toMutableList()
         Log.i(TAG, "iniciar: $listRestaurantes")
+
     }
 
-    private fun listarRestarurants() {
+    fun listarRestarurants() {
         viewModelScope.launch {
             progressBarLiveData.value = true //LiveData notifica del cambio.
             delay(1000)
-            if (listRestaurantes.size == 0) {
-                val data = listRestaurantUseCase()
-                data.let {
-                    //Invocamos a nuestro caso de uso (lógica de negocio).
-                    restaurantListLiveData.value = it
-                    progressBarLiveData.value = false //LiveData notifica del cambio.
-                }
-            } else {
-                Log.i(TAG, "listarRestarurants: estoy en el else")
-                restaurantListLiveData.value = listRestaurantes
+            val data : List<Restaurant>? = listRestaurantUseCase.invoke(tokenUser!!)
+            data.let {
+                //Invocamos a nuestro caso de uso (lógica de negocio).
+                restaurantListLiveData.value = it
                 progressBarLiveData.value = false //LiveData notifica del cambio.
             }
         }
@@ -65,24 +66,35 @@ class RestaurantViewModel @Inject constructor(
 
 
 
-    fun addRestaurant(recyclerView: RecyclerView, context: FragmentActivity) {
-        DialogNewRestaurant()
-            .mostrarDialogoNewRestaurant(
-                recyclerView,context,addRestaurantUseCase,restaurantListLiveData
-        )
+    fun addRestaurant(recyclerView: RecyclerView, context: FragmentActivity, token: String?, id: String?
+    ) {
+        viewModelScope.launch  {
+            DialogNewRestaurant()
+                .mostrarDialogoNewRestaurant (
+                    recyclerView,context,addRestaurantUseCase,restaurantListLiveData,token,id
+                )
+                restaurantListLiveData.value = listRestaurantUseCase.invoke(token!!)
+        }
+
     }
 
-    fun delRestaurant(pos: Int, recyclerView: RecyclerView, context: Context) {
+    fun delRestaurant(pos: Int, recyclerView: RecyclerView, context: Context,token: String?) {
         DialogDeleteRestaurant()
             .mostrarDialogoEliminarRestaurante(
-                pos, recyclerView, context, deleteRestaurantUseCase, restaurantListLiveData
+                pos, recyclerView, context, deleteRestaurantUseCase, restaurantListLiveData,token
         )
     }
 
-    fun updateRestaurant(pos: Int, recyclerView: RecyclerView, context: Context) {
+    fun updateRestaurant(
+        pos: Int,
+        recyclerView: RecyclerView,
+        context: Context,
+        token: String?,
+        id: String?
+    ) {
         DialogEditRestaurant()
             .mostrarDialogoEditarRestaurante(
-            pos, recyclerView, context,editRestaurantUseCase,restaurantListLiveData
+            pos, recyclerView, context,editRestaurantUseCase,restaurantListLiveData,token,id
         )
     }
 

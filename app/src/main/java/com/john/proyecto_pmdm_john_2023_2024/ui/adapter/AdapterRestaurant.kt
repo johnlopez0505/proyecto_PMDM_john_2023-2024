@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.RepositoryRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Repository
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
 
 class AdapterRestaurant(private var deleteOnClick: (Int) -> Unit,
                         private var updateOnClick: (Int) -> Unit,
                         private var sendInfo:      (Int) -> Unit
 ) : RecyclerView.Adapter<ViewHRestaurant>(){
-    var restaurantRepository: List<Restaurant> = RepositoryRestaurant.restaurants//cargo del repsitorio dememoria.
+    var restaurantRepository: List<Restaurant> = Repository.restaurants//cargo del repsitorio dememoria.
 
 
     /*

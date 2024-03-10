@@ -3,10 +3,8 @@ package com.john.proyecto_pmdm_john_2023_2024.domain.model
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestLoginUser
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestRegisterUser
-import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestRestaurantList
 import com.john.proyecto_pmdm_john_2023_2024.data.network.service.UserApiService
 import com.john.proyecto_pmdm_john_2023_2024.domain.model.user.RegisterUser
 import com.john.proyecto_pmdm_john_2023_2024.domain.model.user.User

@@ -11,11 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant.CreateRestaurantUseCase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DialogNewRestaurant : DialogFragment() {
@@ -65,11 +67,13 @@ class DialogNewRestaurant : DialogFragment() {
         mListener = listener
     }
 
-    fun mostrarDialogoNewRestaurant(
+    fun mostrarDialogoNewRestaurant (
         recyclerView: RecyclerView,
         context: FragmentActivity,
         addRestaurantUseCase: CreateRestaurantUseCase,
-        restaurantListLiveData: MutableLiveData<List<Restaurant>>
+        restaurantListLiveData: MutableLiveData<List<Restaurant>>,
+        token: String?,
+        id: String?
     ) {
         val dialog = DialogNewRestaurant()
         dialog.setNewRestaurantDialogListener(object :
@@ -84,10 +88,14 @@ class DialogNewRestaurant : DialogFragment() {
                 // agregamos un nuevo restaurante
                 val newRestaurant = Restaurant(
                     newName, newCity, newProvince, newPhoneNumber,
-                    newImageUrl
+                    newImageUrl, id
                 )
-                addRestaurantUseCase.setRestaurant(newRestaurant)
-                restaurantListLiveData.value = addRestaurantUseCase()
+                //val  addRestaurantUseCase = addRestaurantUseCaseProvide.get()
+                lifecycleScope.launch {
+                    //addRestaurantUseCase.setNewRestaurant(newRestaurant,token)
+                    addRestaurantUseCase.invoke(newRestaurant,token)
+                }
+                //restaurantListLiveData.value = addRestaurantUseCase()
                 Toast.makeText(context, "Nuevo restaurante agregado", Toast.LENGTH_LONG)
                     .show()
             }
