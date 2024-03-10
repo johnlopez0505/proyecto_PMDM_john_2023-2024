@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".models.MainActivity">
+    tools:context=".ui.view.mainActivity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -15,23 +15,20 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#1A775F"
+            android:background="@drawable/fonfo_degradado"
             app:popupTheme="@style/Theme.Proyecto_PMDM_john_20232024.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
 
-    <!--
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="10dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
-    -->
+    <include
+        android:id="@+id/app_bottom_bar"
+        layout="@layout/app_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

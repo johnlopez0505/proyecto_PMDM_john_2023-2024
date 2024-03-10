@@ -80,10 +80,23 @@
             android:src="@drawable/edit_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.376"
+            app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toEndOf="@+id/iv_restaurant"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.991" />
+
+        <ImageView
+            android:id="@+id/btn_descripcion"
+            android:layout_width="38dp"
+            android:layout_height="31dp"
+            android:src="@drawable/baseline_favorite_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toEndOf="@+id/iv_restaurant"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.991" />
+
 
         <ImageView
             android:id="@+id/btn_delete"
@@ -92,7 +105,7 @@
             android:src="@drawable/delete_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.656"
+            app:layout_constraintHorizontal_bias="0.70"
             app:layout_constraintStart_toEndOf="@+id/iv_restaurant"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
