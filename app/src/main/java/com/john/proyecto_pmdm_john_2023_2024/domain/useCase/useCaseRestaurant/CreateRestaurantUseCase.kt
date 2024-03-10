@@ -1,18 +1,20 @@
 package com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant
 
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.DaoRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.RestaurantRepository
 import javax.inject.Inject
 
 class CreateRestaurantUseCase @Inject constructor(
-    private val daoRestaurant : DaoRestaurant){
-
+    private val restaurantRepository: RestaurantRepository
+) {
     private var restaurant: Restaurant? = null
+    private var token: String? = null
 
-    fun setRestaurant(restaurant: Restaurant){
+    fun setNewRestaurant(restaurant: Restaurant, token: String?){
         this.restaurant = restaurant
+        this.token
     }
-    operator fun invoke(): List<Restaurant> {
-        return  daoRestaurant.addRestaurant(restaurant!!)
+    suspend operator fun invoke(newRestaurant: Restaurant, token: String?): Restaurant? {
+        return  restaurantRepository.addRestaurant(newRestaurant, token)
     }
 }

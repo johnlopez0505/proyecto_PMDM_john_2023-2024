@@ -1,24 +1,27 @@
 package com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import com.google.android.material.animation.Positioning
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.DaoRestaurant
-import com.john.proyecto_pmdm_john_2023_2024.data.models.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
+import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.RestaurantRepository
 import javax.inject.Inject
 
+class EditRestaurantUseCase @Inject constructor(
+    private val restaurantRepository: RestaurantRepository
+) {
+    private var idRestaurant: Restaurant? = null
+    private var newRestaurant : Restaurant? = null
+    private var token: String? = null
 
-class EditRestaurantUseCase @Inject constructor(private val daoRestaurant : DaoRestaurant){
+    fun setEditRestaurant(idRestaurant: Restaurant, newRestaurant: Restaurant, token: String){
+        this.idRestaurant = idRestaurant
+        this.newRestaurant = newRestaurant
+        this.token = token
 
-    private var restaurant: Restaurant? = null
-    private var pos: Int = 0
-
-    fun setRestaurant(pos: Int,restaurant: Restaurant){
-        this.pos = pos
-        this.restaurant = restaurant
     }
-
-    operator fun invoke(): List<Restaurant> {
-        return  daoRestaurant.editRestaurant(pos,restaurant!!)
+    suspend operator fun invoke(
+        id: Int,
+        editedRestaurant: Restaurant,
+        token: String?
+    ): Restaurant? {
+        return  restaurantRepository.editRestaurant(id,editedRestaurant, token)
     }
 }
