@@ -1,10 +1,14 @@
 package com.john.proyecto_pmdm_john_2023_2024.ui.view.mainActivity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -17,6 +21,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -33,6 +38,7 @@ import com.john.proyecto_pmdm_john_2023_2024.databinding.NavHeaderMainBinding
 import com.john.proyecto_pmdm_john_2023_2024.ui.modelView.restaurante.RestaurantViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,11 +50,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var email : TextView
     private lateinit var imagen : ImageView
     private lateinit var navView : NavigationView
+    private val RESPUESTA_PERMISO_CAMARA = 100
+    private lateinit var shared: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         init() //inicializo la clase
+        compruebaPermisosCamara();
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -175,6 +185,38 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun compruebaPermisosCamara(): Boolean {
+        //Si versión de nuestro sdk >= que el de nuestra API 23, debemos pedir permisos y estos deben concederse.
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                //Si los permisos fueron ya concedidos por el usuario, simplemente registramos el permiso de la cámara
+                val editor: SharedPreferences.Editor =
+                    shared.edit() //obtenemos nuestro editor de preferencias.
+                editor.putBoolean(
+                    getString(R.string.preferencias_permiso_camara),
+                    true
+                ) //guardamos en las preferencias del islogin, el valor true.
+                editor.commit()
+                true
+            } else {
+                /*
+                     Solicitamos permisos al usuario y esperamos una respuesta.
+                      */
+                ActivityCompat.requestPermissions(
+                    this, arrayOf<String>(Manifest.permission.CAMERA),
+                    RESPUESTA_PERMISO_CAMARA
+                )
+                false
+            }
+        } else {
+            true
         }
     }
 }

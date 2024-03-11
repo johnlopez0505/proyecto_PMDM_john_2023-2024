@@ -44,6 +44,7 @@
     <string name="estamos_en_el_fragment_shorts">Estamos en el fragment shorts</string>
 
     <string name="preferencias_fichero_login">PreferenciasAppRestaurante</string>
+    <string name="preferencias_permiso_camara">preferenciasPermisoCamara</string>
     <string name="preferencias_email">PreferenciaEmail</string>
     <string name="preferencia_login">isLogin</string>
     <string name="preferencia_imagen">imagen</string>

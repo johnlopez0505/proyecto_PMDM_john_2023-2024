@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant.Restaurant
 import com.john.proyecto_pmdm_john_2023_2024.domain.useCase.useCaseRestaurant.CreateRestaurantUseCase
+import com.john.proyecto_pmdm_john_2023_2024.ui.adapter.AdapterRestaurant
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -73,8 +74,10 @@ class DialogNewRestaurant : DialogFragment() {
         addRestaurantUseCase: CreateRestaurantUseCase,
         restaurantListLiveData: MutableLiveData<List<Restaurant>>,
         token: String?,
-        id: String?
+        id: String?,
     ) {
+        val adapter = recyclerView.adapter  as AdapterRestaurant
+        var listarest = adapter.restaurantRepository.toMutableList()
         val dialog = DialogNewRestaurant()
         dialog.setNewRestaurantDialogListener(object :
             NewRestaurantDialogListener {
@@ -90,12 +93,11 @@ class DialogNewRestaurant : DialogFragment() {
                     newName, newCity, newProvince, newPhoneNumber,
                     newImageUrl, id
                 )
-                //val  addRestaurantUseCase = addRestaurantUseCaseProvide.get()
+                listarest.add(newRestaurant)
                 lifecycleScope.launch {
-                    //addRestaurantUseCase.setNewRestaurant(newRestaurant,token)
                     addRestaurantUseCase.invoke(newRestaurant,token)
                 }
-                //restaurantListLiveData.value = addRestaurantUseCase()
+                restaurantListLiveData.value =listarest
                 Toast.makeText(context, "Nuevo restaurante agregado", Toast.LENGTH_LONG)
                     .show()
             }

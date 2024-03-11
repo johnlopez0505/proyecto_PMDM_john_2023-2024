@@ -3,6 +3,7 @@ package com.john.proyecto_pmdm_john_2023_2024.data.network.service.restaurant
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.widget.Toast
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestIdRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestInsertRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.responses.ResponseCreate
@@ -21,13 +22,16 @@ class RestaurantApiService @Inject constructor(
             try {
                 Log.i(TAG, "getRestaurantList restaurante apiServe: ${restaurantService.listarRestaurant(token)}")
                 val response : Response<ResponseRestaurant> = restaurantService.listarRestaurant(token)
-                Log.i(ContentValues.TAG, "getLista resaturante respuesta del servidor : ${response} ")
+                val error = response.body()
+                Log.i(TAG, "getLista resaturante respuesta del servidor : ${response.body()} ")
                 if (response.isSuccessful){
                     response.body()?.let{
+
                             retUser->
                         return@let Result.success(retUser)
                     }?: return@withContext Result.failure(RuntimeException("Respuesta de usuarios nula"))
                 }else{
+                    //Log.i(TAG, "getRestaurantList mensaje del servidor: ${response.body()}")
                     return@withContext Result.failure(RuntimeException("Error en la llamada y sin respuesta"))
                 }
             }

@@ -73,7 +73,6 @@ class RestaurantViewModel @Inject constructor(
                 .mostrarDialogoNewRestaurant (
                     recyclerView,context,addRestaurantUseCase,restaurantListLiveData,token,id
                 )
-                restaurantListLiveData.value = listRestaurantUseCase.invoke(token!!)
         }
 
     }

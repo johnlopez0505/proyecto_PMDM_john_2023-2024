@@ -94,7 +94,7 @@ class DialogEditRestaurant(
         id: String?
     ) {
         val adapter = recyclerView.adapter  as AdapterRestaurant
-        var listarest = adapter.restaurantRepository
+        var listarest = adapter.restaurantRepository.toMutableList()
 
 
         if (pos in listarest.indices) {
@@ -115,17 +115,14 @@ class DialogEditRestaurant(
                         newName, newCity, newProvince,
                         newPhoneNumber, newImageUrl, id
                     )
-                    Log.i(TAG, "onDialogPositiveClick este es el nuevo restaurante: $editedRestaurant")
+                    Log.i(TAG, "onDialogPositiveClick este es el nuevo restaurante: ${listarest}")
                     lifecycleScope.launch {
-                        //addRestaurantUseCase.setNewRestaurant(newRestaurant,token)
-                        editRestaurantUseCase.invoke(13, editedRestaurant,token)
-                        //addRestaurantUseCase.invoke(newRestaurant,token)
+                        editRestaurantUseCase.invoke(listarest[pos].id.toInt(), editedRestaurant,token)
+                        listarest[pos] = editedRestaurant
+                        restaurantListLiveData.value = listarest
+                        Toast.makeText(context, "Restaurante editado correctamente",
+                            Toast.LENGTH_LONG).show()
                     }
-                    //editRestaurantUseCase.setEditRestaurant(idRestaurant[0],editedRestaurant,token!!)
-                    //editRestaurantUseCase()
-                    //restaurantListLiveData.value =
-                    Toast.makeText(context, "Restaurante editado correctamente",
-                        Toast.LENGTH_LONG).show()
                 }
 
                 override fun onDialogNegativeClick() {
@@ -133,7 +130,6 @@ class DialogEditRestaurant(
                     Toast.makeText(context, "Edición del restaurante cancelada",
                         Toast.LENGTH_LONG).show()
                 }
-
             })
 
             dialog.show((context as AppCompatActivity).supportFragmentManager,
@@ -142,6 +138,5 @@ class DialogEditRestaurant(
             // Manejar el caso en el que pos no es válido
             Toast.makeText(context, "Posición no válida", Toast.LENGTH_SHORT).show()
         }
-
     }
 }

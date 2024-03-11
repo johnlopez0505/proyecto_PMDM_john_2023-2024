@@ -60,7 +60,7 @@ class Restaurant(
 
     override fun toString(): String {
         return "Restaurant(name='$nombre', city='$ciudad', province='$provincia'," +
-                "phone='$telefono', image='$imagen')"
+                "phone='$telefono', image='$imagen', id='$id')"
     }
 }
 

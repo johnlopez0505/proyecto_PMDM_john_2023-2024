@@ -67,7 +67,7 @@ class DialogDeleteRestaurant(
     ) {
 
         val adapter = recyclerView.adapter  as AdapterRestaurant
-        var listarest = adapter.restaurantRepository
+        var listarest = adapter.restaurantRepository.toMutableList()
         if(pos in listarest.indices) {
             val dialog = DialogDeleteRestaurant(pos, listarest[pos].nombre)
             dialog.setDeleteRestaurantDialogListener(object :
@@ -75,18 +75,15 @@ class DialogDeleteRestaurant(
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onDialogPositiveClick(pos: Int) {
 
-                    Toast.makeText(context, "id del restaurante  " +
-                            "${listarest[pos].id} ", Toast.LENGTH_LONG).show()
-
                     lifecycleScope.launch {
-                        deleteRestaurantUseCase.invoke(15.toInt(),token)
-                        Toast.makeText(
-                            context, "Borrado el Restaurante ${listarest[pos].nombre}" +
-                                    " de la posición $pos", Toast.LENGTH_LONG
-                        ).show()
-                        //restaurantListLiveData.value = deleteRestaurantUseCase()
-
+                        deleteRestaurantUseCase.invoke(listarest[pos].id.toInt(),token)
                     }
+                    Toast.makeText(
+                        context, "Borrado el Restaurante ${listarest[pos].nombre}" +
+                                " de la posición $pos", Toast.LENGTH_LONG
+                    ).show()
+                    listarest.removeAt(pos)
+                    restaurantListLiveData.value = listarest
                 }
 
                 override fun onDialogNegativeClick() {

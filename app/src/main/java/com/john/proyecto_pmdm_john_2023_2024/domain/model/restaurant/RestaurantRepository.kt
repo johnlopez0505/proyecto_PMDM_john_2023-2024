@@ -2,10 +2,11 @@ package com.john.proyecto_pmdm_john_2023_2024.domain.model.restaurant
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestIdRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.network.models.request.RequestInsertRestaurant
 import com.john.proyecto_pmdm_john_2023_2024.data.network.service.restaurant.RestaurantApiService
 import javax.inject.Inject
+
+
 
 class RestaurantRepository @Inject constructor(
     private val restaurantService : RestaurantApiService
@@ -26,8 +27,8 @@ class RestaurantRepository @Inject constructor(
                             restaurant.provincia,
                             restaurant.telefono,
                             restaurant.imagen!!,
-                            restaurant.id_usuario!!,
-                            restaurant.id))
+                            restaurant.id,
+                            restaurant.id_usuario!!))
                     }
                     Repository.restaurants = mutableRestaurant
                     return Repository.restaurants
@@ -64,12 +65,10 @@ class RestaurantRepository @Inject constructor(
         }catch (e : Exception){
             println("error en los datos")
         }
-
         return null
     }
 
     suspend fun deleteRestaurant(id: Int, token: String?):Restaurant?{
-        //val idRequest =  RequestIdRestaurant(id)
         val result = restaurantService.deleteRestaurant(id,token!!)
         result
             .onSuccess {
@@ -77,7 +76,6 @@ class RestaurantRepository @Inject constructor(
                 return Restaurant(
                     responseRest.result
                 )
-
             }
             .onFailure {
                     exception ->  println("Error en la excepcion ${exception.message}")
@@ -107,6 +105,4 @@ class RestaurantRepository @Inject constructor(
             }
         return  null
     }
-
-
 }
