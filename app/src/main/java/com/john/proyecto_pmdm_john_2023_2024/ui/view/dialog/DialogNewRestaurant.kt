@@ -154,7 +154,7 @@ class DialogNewRestaurant : DialogFragment() {
                 // Convertimos la imagen a base 64
                 val base64Image = bitmapToBase64(imageBitmap,"PNG")
                 imgBase64 = base64Image
-                Toast.makeText(requireActivity(), "Imagen en Base64: $base64Image", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Imagen selecionada correctamente", Toast.LENGTH_LONG).show()
             }
         }
 

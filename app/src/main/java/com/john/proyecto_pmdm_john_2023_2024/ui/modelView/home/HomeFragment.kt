@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.john.proyecto_pmdm_john_2023_2024.R
 import com.john.proyecto_pmdm_john_2023_2024.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -24,7 +25,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textHome.text = "Estamos el el fragment Home"
+        binding.textHome.text = "Bienvenidos"
+        binding.imgInicio.setImageResource(R.drawable.restaurante1)
     }
 
 

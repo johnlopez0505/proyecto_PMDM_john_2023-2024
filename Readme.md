@@ -1,153 +1,205 @@
-# Proyecto PMDM Tema3 CRUD completo
-
-## Introducción
-
-Proyecto PMDM Tema 3 (`Programación Multimedia y Dispositivos Móviles`). Este proyecto tiene como 
-objetivo demostrar la implementación de un sistema de gestión de restaurantes utilizando el patrón 
-de diseño Modelo-Vista-Controlador (`MVC`). La aplicación permite realizar operaciones CRUD (Crear,
-Leer, Actualizar, Eliminar) sobre una lista de restaurantes. A lo largo de esta documentación, 
-exploraremos las clases y componentes clave del proyecto, describiendo sus funciones y 
-responsabilidades.
-
-
-
+# Proyecto PMDM con Retrofit
 
 ## Descripción General
 
-El proyecto está estructurado en varias clases que representan las capas del patrón `MVC`: modelos 
-para los datos de restaurantes y usuarios, vistas para la interfaz de usuario, y controladores 
-para gestionar la lógica de negocio y las interacciones entre modelos y vistas.
+Este proyecto utiliza Retrofit para realizar operaciones de CRUD (Crear, Leer, Actualizar, Eliminar) en una API de 
+restaurantes. Está estructurado en varias clases que interactúan para gestionar las solicitudes a la API y actualizar 
+la interfaz de usuario en consecuencia.
 
+## Clases y Métodos Principales
 
-## Clases Principales
+### `RestaurantApiAplicacion`
 
-### AdapterRestaurant
+Esta clase extiende la clase `Application` y se utiliza para inicializar la aplicación.
 
-#### Descripción
-El adaptador `AdapterRestaurant` es esencial para la representación de la lista de restaurantes en 
-un RecyclerView. Maneja la creación de vistas individuales y la vinculación de datos a través de su 
-ViewHolder asociado.
+### Modelos de Datos
 
-#### Métodos
+- `RequestInsertRestaurant`: Modelo de datos para insertar un nuevo restaurante.
+- `RequestLoginUser`: Modelo de datos para iniciar sesión.
+- `ResponseRest`: Modelo de datos para la respuesta de la API al realizar operaciones en un restaurante.
+- `ResponseLogin`: Modelo de datos para la respuesta de la API al iniciar sesión.
 
-- `onCreateViewHolder`: Crea y devuelve un nuevo ViewHolder.
-- `onBindViewHolder`: Vincula los datos de un restaurante a una vista específica.
-- `getItemCount`: Devuelve el número total de elementos en la lista.
+### `RestaurantApiService`
 
-### ViewHRestaurant
+Esta clase se encarga de realizar llamadas a la API de restaurantes utilizando Retrofit. Contiene métodos para obtener 
+la lista de restaurantes, agregar, eliminar y editar restaurantes.
 
-#### Descripción
-La clase `ViewHRestaurant` es un ViewHolder personalizado para los elementos de la lista de 
-restaurantes. Gestiona la asignación de datos y la definición de oyentes para los botones de 
-edición y eliminación.
+### `RestaurantRepository`
 
-#### Métodos
+Este repositorio actúa como una capa intermedia entre la clase `RestaurantApiService` y la vista (`RestaurantesFragment`
+). Gestiona las solicitudes a la API y devuelve los resultados al ViewModel.
 
-- `renderize`: Asigna los datos del restaurante a la vista.
-- `setOnClickListener`: Define los oyentes para las interacciones de los botones.
+### Casos de Uso
 
-### Controller
+- `ListRestaurantUseCase`: Caso de uso para obtener la lista de restaurantes.
+- `EditRestaurantUseCase`: Caso de uso para editar un restaurante.
+- `DeleteRestaurantUseCase`: Caso de uso para eliminar un restaurante.
+- `CreateRestaurantUseCase`: Caso de uso para agregar un nuevo restaurante.
 
-#### Descripción
+### `RetrofitModule`
 
-La clase `Controller` actúa como el controlador principal, orquestando la lógica de negocio y las 
-interacciones con la interfaz de usuario. Se encarga de la gestión de datos y la coordinación entre 
-modelos y vistas, algunos de sus métodos clave incluyen:
+Este módulo proporciona la configuración de Retrofit y las interfaces de servicio necesarias para interactuar con la API
+de restaurantes.
 
-#### Métodos
+### `RestaurantViewModel`
 
-- `initData`: Inicializa los datos de la lista de restaurantes.
-- `iniciar`: Configura el adaptador y el`RecyclerView`.
-- `delRestaurant`: Gestiona la lógica para eliminar un restaurante.
-- `updateRestaurant`: Gestiona la lógica para actualizar un restaurante.
-- `addRestaurant`: Añade un nuevo restaurante a la lista.
-- `mostrarDialogoEliminarRestaurante`: Muestra un diálogo de confirmación para eliminar un
-  restaurante.
-- `mostrarDialogoEditarRestaurante`: Muestra un diálogo de edición para un restaurante
-  existente.
-- `mostrarDialogoNewRestaurant`: Muestra un diálogo para agregar un nuevo restaurante.
+Este ViewModel se encarga de gestionar la lógica de negocio relacionada con la gestión de restaurantes. Contiene métodos
+para listar, agregar, eliminar y editar restaurantes, así como LiveData para observar los cambios en los datos.
+````kotlin
+  @HiltViewModel
+  class RestaurantViewModel @Inject constructor(
+      private val listRestaurantUseCase: ListRestaurantUseCase,
+      private var editRestaurantUseCase:  EditRestaurantUseCase,
+      private var addRestaurantUseCase: CreateRestaurantUseCase,
+      private var deleteRestaurantUseCase: DeleteRestaurantUseCase
+    ): ViewModel() {
+        
+      var restaurantListLiveData = MutableLiveData<List<Restaurant>>() //repositorio observable.
+      private var listRestaurantes: MutableList<Restaurant> = mutableListOf() // lista de objetos
+      var progressBarLiveData = MutableLiveData<Boolean>() //progressbar observable
+      private  var tokenUser: String? = null
+  
+      init {
+        listarRestarurants()
+      }
+  
+      fun listarRestarurants() {
+        viewModelScope.launch {
+          progressBarLiveData.value = true //LiveData notifica del cambio.
+          delay(1000)
+          val data : List<Restaurant>? = listRestaurantUseCase.invoke(tokenUser!!)
+          data.let {
+            //Invocamos a nuestro caso de uso (lógica de negocio).
+            restaurantListLiveData.value = it
+            progressBarLiveData.value = false //LiveData notifica del cambio.
+          }
+        }
+      }
+  
+      fun addRestaurant(recyclerView: RecyclerView, context: FragmentActivity, token: String?, id: String?
+      ) {
+        viewModelScope.launch  {
+          DialogNewRestaurant()
+            .mostrarDialogoNewRestaurant (
+              recyclerView,context,addRestaurantUseCase,restaurantListLiveData,token,id
+            )
+        }
+      }
+    
+      fun delRestaurant(pos: Int, recyclerView: RecyclerView, context: Context,token: String?) {
+        DialogDeleteRestaurant()
+          .mostrarDialogoEliminarRestaurante(
+            pos, recyclerView, context, deleteRestaurantUseCase, restaurantListLiveData,token
+          )
+      }
+    
+      fun updateRestaurant(pos: Int, recyclerView: RecyclerView, context: Context, token: String?, id: String?
+      ) {
+        DialogEditRestaurant()
+          .mostrarDialogoEditarRestaurante(
+            pos, recyclerView, context,editRestaurantUseCase,restaurantListLiveData,token,id
+          )
+      }
+  }
+````
+### `RestaurantesFragment`
 
+Este fragmento muestra la lista de restaurantes y permite al usuario realizar operaciones CRUD en ellos. Utiliza el 
+ViewModel `RestaurantViewModel` para interactuar con los datos y actualizar la interfaz de usuario en consecuencia.
 
-## Fragmentos y Actividades
-
-- `RestaurantesFragment`: Muestra la lista de restaurantes utilizando el patrón MVC.
-- `Login`: Maneja la autenticación de usuarios y redirige al `MainActivity` con la 
-  información del usuario autenticado.
-- `MainActivity`: La actividad principal que incluye la navegación entre fragmentos.
-
-
-## Clases de Datos
-
-### `DaoRestaurant` y `Repository`
-
-Estas clases gestionan el acceso a los datos de restaurantes. `DaoRestaurant` proporciona 
-métodos para acceder a los datos de la base de datos, mientras que `Repository` almacena 
-la lista predefinida de restaurantes.
-
-
-### User y UserRepository
-
-#### Descripción
-Estas clases gestionan los datos de usuarios, con métodos para acceder a la lista de usuarios y 
-agregar nuevos usuarios.
-
-## Modelos
-
-### Restaurant y User
-
-#### Descripción
-Clases de modelo que representan datos de restaurantes y usuarios respectivamente.
-
-## Conclusiones y Futuras Mejoras
-
-Este proyecto demuestra la implementación de un sistema de gestión de restaurantes con funcionalidades CRUD. 
-Se ha estructurado siguiendo el patrón MVC, lo que facilita la modularidad y el mantenimiento del código. 
-Como futuras mejoras, se podría considerar la expansión de las funcionalidades, una interfaz de usuario más 
-intuitiva y una mayor modularidad del código.
-
-## Imagen de ejecucion de la aplicacion 
-
-## Login
-
-![img](./imagenes/img.png)
-
-
-## Register
-
-![img](./imagenes/img_1.png)
-
-## RecycleView
-
-![img](./imagenes/img_3.png)
-___
-
-## Navigation drawers, button,toolbar
-
-![img](./imagenes/img_4.png)
-
-![img](./imagenes/img_7.png)
-
-![img](./imagenes/img_8.png)
-
-![img](./imagenes/img_11.png)
-
-## Dialogs
-
-![img](./imagenes/img_10.png)
-
-![img](./imagenes/img_9.png)
-![img](./imagenes/img_2.png)
-
-## Fragments
-![img](./imagenes/img_5.png)
-
-![img](./imagenes/img_6.png)
-
-____
-
-### Enlace al repositorio, la version en la rama dev
-
-[REPOSITORIO:https://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024.git](https://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024.git)
+```kotlin
+  @AndroidEntryPoint
+  class RestaurantesFragment : Fragment() {
+      override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    
+        adapter = AdapterRestaurant( { pos -> delRestaurant(pos) },
+          { pos -> updateRestaurant(pos)},{pos ->sendInfoRestaurant(pos)})
+        initRecyclerView() //inicializamos el recyclerView. De memento, contendrá lista empty.
+        init()
+        restaurantViewModel.listarRestarurants()
+    
+      }
+    
+      private fun cargarPreferenciasCompartidas() {
+        val fichePreferencias : String = getString(R.string.preferencias_fichero_login)
+        shared = contexto.getSharedPreferences(fichePreferencias, AppCompatActivity.MODE_PRIVATE)
+      }
+    
+      private fun initRecyclerView(){
+        binding.myRecyclerView.layoutManager = LinearLayoutManager( requireContext())
+        recyclerView = binding.myRecyclerView.findViewById(R.id.my_recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
+    
+      }
+    
+    
+      private fun init(){
+        contexto = requireActivity() as MainActivity
+        cargarPreferenciasCompartidas()
+        registerLiveData()
+        val token = shared.getString(getString(R.string.token),"")
+        restaurantViewModel.iniciar(adapter,token)
+      }
+      private fun delRestaurant(pos:Int){
+        val token = shared.getString(getString(R.string.token),"")
+        restaurantViewModel.delRestaurant(pos,recyclerView,contexto,token)
+        post = pos
+      }
+    
+      private fun updateRestaurant(pos: Int){
+        val token = shared.getString(getString(R.string.token),"")
+        val id = shared.getString("id","")
+        restaurantViewModel.updateRestaurant(pos,recyclerView,contexto,token,id)
+        post = pos
+      }
+      private fun registerLiveData() {
+        restaurantViewModel.restaurantListLiveData.observe(requireActivity()) {
+            myList ->
+          Log.i(TAG, "registerLiveData: $myList")
+          listRestaurants = myList.toMutableList()
+          adapter.restaurantRepository = myList!! //aseguro los datos.
+          adapter.notifyDataSetChanged()
+          adapter.notifyItemChanged(myList.size -1)
+          adapter.notifyItemRemoved(post)
+          adapter.notifyItemChanged(post)
+        }
+    
+        restaurantViewModel.progressBarLiveData.observe(requireActivity()) {
+            visible ->
+          binding.progressBar.isVisible = visible
+          Log.i("TAG-DOGS", "ProgressBar esta $visible")
+        }
+    
+        binding.fab.setOnClickListener{
+          val token = shared.getString(getString(R.string.token),"")
+          val id = shared.getString("id","")
+          Log.i(TAG, "id usuario  : $id")
+          restaurantViewModel.addRestaurant(recyclerView,requireActivity(),token,id)
+        }
+      }
+    
+      private fun sendInfoRestaurant(pos: Int) {
+        val myActivity = requireActivity()
+        val navHost = myActivity //referencia del activity
+          .supportFragmentManager //administrador de Fragmentos
+          .findFragmentById(R.id.nav_host_fragment_content_main)
+    
+        navHost.let {//Si entramos dentro, no es nulo.
+          navController = navHost!!.findNavController() //buscamos su NavController
+          val (name, city, province, phone, image) = adapter.restaurantRepository[pos]
+          navController.navigate(
+            RestaurantesFragmentDirections.actionNavRestaurantesToDescripcionFragment(
+              data = arrayOf("$pos", name, city, province, phone, image)))
+        }
+        Toast.makeText(
+          context, "Este es el restaurante ${listRestaurants[pos].nombre}" +
+                  " de la posición $pos", Toast.LENGTH_LONG
+        ).show()
+      }
+  }
+```
 
 
 # Preferencias compartidas Login
@@ -191,28 +243,22 @@ La clase `Login` es una actividad de Android que gestiona el proceso de inicio d
 - Valida las credenciales del usuario comparándolas con datos almacenados.
 - Guarda las preferencias y inicia la actividad principal si las credenciales son válidas.
 ```kotlin
-   private fun validarCredenciales() {
-      val user = bindingLogin.editTextUsername.text.toString()
-      val password = bindingLogin.editTextPassword.text.toString()
-      val usuarioEncontrado =  DaoUser.myDao.getDataUser().find {
-        it.name==user && it.password ==password }
-      val email = usuarioEncontrado?.email.toString()
-      if (usuarioEncontrado != null) {
-        // Guardar el último usuario ingresado
-        guardarUltimoUsuario(user, password,email)
-        // El usuario ha iniciado sesión con éxito
-        //guardamos las preferencias
-        saveLoginState(email)
-        // Credenciales válidas, iniciar Activity principal
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("name",user)
-        intent.putExtra("email",email)
-        startActivity(intent)
-      } else {
-        // Las credenciales no son válidas
-        Toast.makeText(this, "Credenciales no válidas",
-          Toast.LENGTH_SHORT).show() }
-  }
+   private fun validarCredenciales(login: User) {
+      val user = login.name
+      val password = bindingLogin.password.text.toString()
+      val email = login.email
+      // Guardar el último usuario ingresado
+      guardarUltimoUsuario(email!!, password, login.name!!,login.imagen)
+      // El usuario ha iniciado sesión con éxito
+      //guardamos las preferencias
+      saveLoginState(user!!,login.imagen,login.token,login.id)
+      // Credenciales válidas, iniciar Activity principal
+      val intent = Intent(this, MainActivity::class.java)
+      intent.putExtra("name", login.name)
+      intent.putExtra("email", email)
+      intent.putExtra("image", login.imagen)
+      startActivity(intent)
+   }
 ```
 
 ### Método `registerUser`:
@@ -248,16 +294,18 @@ La clase `Login` es una actividad de Android que gestiona el proceso de inicio d
 - Inicia la actividad principal con datos del último usuario.
 ```kotlin
    private fun startMainActivity() {
-      loadLastUser()
-      val email = shared.getString(getString(R.string.preferencias_email), "")
-      // Iniciar la actividad principal
-      val intent = Intent(this, MainActivity::class.java)
-      intent.putExtra("name",user)
-      intent.putExtra("email",email)
-      startActivity(intent)
-    
-      // Finalizar esta actividad para que no vuelva atrás con el botón de retroceso
-      finish()
+  loadLastUser()
+    val imagen = shared.getString(getString(R.string.preferencia_imagen),"")
+    val email = shared.getString(getString(R.string.preferencias_email), "")
+    val token = shared.getString(getString(R.string.token),"")
+    // Iniciar la actividad principal
+    val intent = Intent(this, MainActivity::class.java)
+    intent.putExtra("name",email)
+    intent.putExtra("email",user)
+    intent.putExtra("image",imagen)
+    startActivity(intent)
+  // Finalizar esta actividad para que no vuelva atrás con el botón de retroceso
+  finish()
    }
 ```
 
@@ -272,16 +320,12 @@ La clase `Login` es una actividad de Android que gestiona el proceso de inicio d
    private fun cerrarSesion() {
       // Obtenemos un editor de SharedPreferences
       val editor = shared.edit()
-    
       // Limpiamos el estado de inicio de sesión
       editor.putBoolean(getString(R.string.preferencia_login), false)
-    
       // Aplicamos los cambios
       editor.apply()
-    
       val intent = Intent(activity, Login::class.java)
       startActivity(intent)
-    
       showToast("Sesión cerrada exitosamente")
    }
 ```
@@ -313,7 +357,51 @@ La clase `LogoutFragment` es un fragmento que proporciona la opción para cerrar
 ### Método `showToast`:
 - Muestra un mensaje Toast con el texto proporcionado.
 
-Este es un resumen de la funcionalidad de cada sección y método en la clase `Login` 
+Este es un resumen de la funcionalidad de cada sección y método en la clase `Login`
 y el fragmento `LogoutFragment`.
 
-[REPOSITORIOhttps://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024/tree/dev](https://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024/tree/dev)
+
+## Imagen de ejecucion de la aplicacion
+
+## Login
+
+![img](./imagenes/img.png)
+
+
+## Register
+
+![img](./imagenes/img_1.png)
+
+## RecycleView
+
+![img](./imagenes/img_4.png)
+___
+
+## Navigation drawers, button,toolbar
+
+![img](./imagenes/img_3.png)
+
+## Dialogs
+
+![img](./imagenes/img_7.png)
+![img](./imagenes/img_9.png)
+![img](./imagenes/img_8.png)
+
+## Fragments
+![img](./imagenes/img_2.png)
+![img](./imagenes/img_10.png)
+
+
+## Camara
+![img](./imagenes/img_6.png)
+____
+
+## Conclusiones
+
+Este proyecto demuestra cómo utilizar Retrofit para realizar operaciones CRUD en una API de restaurantes en una 
+aplicación Android. La estructura MVVM ayuda a mantener el código organizado y modular, facilitando su mantenimiento y 
+escalabilidad.
+
+
+[REPOSITORIO:https://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024/tree/retrofit](https://github.com/johnlopez0505/proyecto_PMDM_john_2023-2024/tree/retrofit)
+

@@ -55,7 +55,6 @@ class Login : AppCompatActivity() {
         bindingLogin.buttonLogin.setOnClickListener {
             loginViewModel.isLogin(bindingLogin.email.text.toString(),
                 bindingLogin.password.text.toString())
-            Log.i(TAG, "initEvents: ${bindingLogin.email}")
         }
 
 

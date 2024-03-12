@@ -55,5 +55,8 @@
     <string name="contrase_a">Contraseña</string>
     <string name="usuario">Usuario</string>
     <string name="home">Home</string>
+    <string name="editar_perfil">Editar perfil</string>
+    <string name="bienvenidos">Bienvenidos</string>
+    <string name="img">img</string>
 
 </resources>

@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         init() //inicializo la clase
-        compruebaPermisosCamara();
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init(){
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as

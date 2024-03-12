@@ -90,7 +90,6 @@ class DialogEditRestaurant(
             pickPhotoFromGallery()
         }
 
-
         return AlertDialog.Builder(requireContext())
 
             .setView(view)
@@ -144,6 +143,7 @@ class DialogEditRestaurant(
 
                     // Lógica para guardar la edición del restaurante
                     val imagen = restaurant?.imagen
+
                     val editedRestaurant = Restaurant(
                         newName, newCity, newProvince,
                         newPhoneNumber, newImageUrl, id
@@ -182,7 +182,7 @@ class DialogEditRestaurant(
                 // Convertimos la imagen a base 64
                 val base64Image = bitmapToBase64(imageBitmap,"PNG")
                 imgBase64 = base64Image
-                Toast.makeText(requireActivity(), "Imagen en Base64: $base64Image", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Imagen selecionada correctamente", Toast.LENGTH_LONG).show()
             }
         }
 
